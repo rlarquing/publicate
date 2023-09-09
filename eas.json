@@ -20,8 +20,7 @@
           "API_URL": "https://mapas.geocuba.cu/apimayabeque",
           "SOCKET_URL":"https://mapas.geocuba.cu/",
           "ENV": "prod",
-          "DATABASE": "pasajes",
-          "UPDATE_TARJETAS": "update_tarjetas",
+          "DATABASE": "publicate"
         }
       }
     },
