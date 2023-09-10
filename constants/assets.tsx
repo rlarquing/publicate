@@ -38,10 +38,15 @@ import settings_colors_icon from '../assets/icons/settings-colors-icon.png';
 import shield_icon from '../assets/icons/shield-icon.png';
 import logout_icon from '../assets/icons/logout-icon.png';
 import information_icon from '../assets/icons/information-icon.png';
+import key_icon from '../assets/icons/key-icon.png';
+import account_icon from '../assets/icons/account-icon.png';
 
+import login_image from '../assets/images/login-image.png';
 import welcome_image from '../assets/images/welcome-image.png';
 import welcome_image2 from '../assets/images/welcome-image2.png';
 import inline_logo from '../assets/images/inline-logo.png';
+import standing_people from '../assets/images/people-standing.png';
+import business_man from '../assets/images/business-man.png';
 // import logo from '../assets/images/logo.png';
 // import logo_big from '../assets/images/LOGORECLAMO.png';
 // import gradient from '../assets/images/gradient.png';
@@ -112,5 +117,10 @@ export default {
     information_icon,
     welcome_image,
     welcome_image2,
-    inline_logo
+    inline_logo,
+    login_image,
+    key_icon,
+    standing_people,
+    business_man,
+    account_icon
 }

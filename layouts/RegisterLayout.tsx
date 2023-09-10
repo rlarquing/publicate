@@ -4,19 +4,20 @@ import {
     Text,
     View,
     SafeAreaView,
-    Dimensions
+    Dimensions,
+    Image
 } from "react-native";
-import { COLORS, SIZES } from "../constants";
+import { COLORS, SIZES, assets } from "../constants";
 import FocusedStatusBar from "../components/FocusedStatusBar";
 
 const deviceWidth = Dimensions.get('window').width;
 
-const LoginLayout = ({ children }: any) => {
+const RegisterLayout = ({ children }: any) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.light.primary }}>
             <FocusedStatusBar background={COLORS.black} />
             <View style={styles.header}>
-                <Text style={styles.logo}>Publicate</Text>
+                <Image style={styles.logo} source={assets.inline_logo} width={190} height={30} />
             </View>
             <View style={styles.container}>
                 {children}
@@ -36,13 +37,15 @@ const styles = StyleSheet.create({
         zIndex: 300,
         margin: 0,
         padding: 0,
-        top: 120,
+        top: 160,
         bottom: 0
     },
     header: {
-        width: "100%",
-        height: 100,
+        width: 190,
+        height: 47,
         zIndex: 100,
+        marginLeft: "auto",
+        marginRight: "auto",
         top: 0
     },
     image: {
@@ -52,20 +55,15 @@ const styles = StyleSheet.create({
         height: 256,
     },
     logo: {
-        top: 40,
         width: "100%",
-        height: 100,
+        height: "100%",
+        top: 40,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        position: 'absolute',
-        textAlign: "center",
-        color: COLORS.primary,
-        fontFamily: "Impact",
-        fontSize: 36
     },
     background: {
-        top: "35%",
+        top: 120,
         width: "100%",
         height: "100%",
         flex: 1,
@@ -75,4 +73,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginLayout;
+export default RegisterLayout;

@@ -21,11 +21,13 @@ export const COLORS = {
         textGray: "#686868",
         textDarkGray: "#383838",
         textDarkGreen: "#054409",
-        inputBackground: "#F5F5F5",
+        inputBackground: "#E8E8E8",
+        inputBorder: "#DCDCDC",
         blue: "#59ADFF",
         orange: "#F6C387",
         cream: "#E6FFEF",
         green: '#deffe3',
+        textSecondary: "#757575"
     },
     dark: {
         primary: "#F8C822",

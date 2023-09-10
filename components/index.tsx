@@ -1,5 +1,3 @@
-import Layout from "../layouts/Layout";
-import LoginLayout from "../layouts/LoginLayout";
 import Card from "./Card";
 // import Pay from "./Pay";
 import Recharge from "./Recharge";
@@ -14,10 +12,10 @@ import NavigationBar from "./NavigationBar";
 import DropGradient from "./DropGradient";
 import { CustomAlert, ICON_COLOR, ALERT_TYPE } from './CustomAlert';
 import Loading from "./Loading";
+import { DefaultInput } from "./Input";
+import { Line } from "./Line";
 
 export {
-    Layout,
-    LoginLayout,
     Card,
     // Pay,
     Recharge,
@@ -37,5 +35,7 @@ export {
     CustomAlert,
     ICON_COLOR,
     ALERT_TYPE,
-    Loading
+    Loading,
+    DefaultInput,
+    Line
 };

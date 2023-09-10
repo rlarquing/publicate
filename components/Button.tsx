@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 import { assets, COLORS, SIZES, FONTS, SHADOWS } from "../constants";
 
-export const CircleButton = ({ imgUrl, imgSize, handlePress, ...props }) => {
+export const CircleButton = ({ imgUrl, imgSize, handlePress, ...props }: any) => {
   return (
     <TouchableOpacity
       style={{
@@ -27,7 +27,7 @@ export const CircleButton = ({ imgUrl, imgSize, handlePress, ...props }) => {
   );
 };
 
-export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
+export const RectButton = ({ minWidth, fontSize, handlePress, ...props }: any) => {
   return (
     <TouchableOpacity
       style={{
@@ -61,7 +61,7 @@ export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
   );
 };
 
-export const SearchButton = ({ fontSize, handlePress, ...props }) => {
+export const SearchButton = ({ fontSize, handlePress, ...props }: any) => {
   return (
     <TouchableOpacity
       style={{
@@ -87,14 +87,13 @@ export const SearchButton = ({ fontSize, handlePress, ...props }) => {
   );
 };
 
-
-export const DefaultButton = ({ text, textColor, handlePress, icon, iconSize, size, btnBorderColor, textSize, ...props }) => {
+export const RoundedButton = ({ text, textColor, handlePress, icon, iconSize, size, btnBorderColor, textSize, ...props }: any) => {
   const [active, setActive] = useState(false);
 
   return (
     <TouchableOpacity
       style={[
-        active ? styles.defaultBtnActive : styles.defaultBtn,
+        active ? styles.roundedBtnActive : styles.roundedBtn,
         {
           width: size,
           borderColor: btnBorderColor,
@@ -113,13 +112,13 @@ export const DefaultButton = ({ text, textColor, handlePress, icon, iconSize, si
   );
 };
 
-export const SmallButton = ({ text, textColor, handlePress, icon, iconSize, size, btnBorderColor, textSize, ...props }) => {
+export const SmallRoundedButton = ({ text, textColor, handlePress, icon, iconSize, size, btnBorderColor, textSize, ...props }: any) => {
   const [active, setActive] = useState(false);
 
   return (
     <TouchableOpacity
       style={[
-        active ? styles.defaultBtnActive : styles.defaultBtn,
+        active ? styles.roundedBtnActive : styles.roundedBtn,
         {
           width: size,
           borderColor: btnBorderColor,
@@ -141,8 +140,53 @@ export const SmallButton = ({ text, textColor, handlePress, icon, iconSize, size
 };
 
 
+export const DefaultButton = ({ text, textColor, handlePress, size, btnBorderColor, textSize, ...props }: any) => {
+  const [active, setActive] = useState(false);
+
+  return (
+    <TouchableOpacity
+      style={[
+        active ? styles.defaultBtnActive : styles.defaultBtn,
+        {
+          width: size,
+          ...props
+        }]}
+      onPress={handlePress}
+      activeOpacity={0.5}
+      onPressIn={() => { setActive(true) }}
+      onPressOut={() => { setActive(false) }}
+    >
+      <Text style={[styles.btnText, { color: textColor, fontSize: textSize ? textSize : 16 }]}>{text}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export const SmallButton = ({ text, textColor, handlePress, size, btnBorderColor, textSize, ...props }: any) => {
+  const [active, setActive] = useState(false);
+
+  return (
+    <TouchableOpacity
+      style={[
+        active ? styles.defaultBtnActive : styles.defaultBtn,
+        {
+          width: size,
+          height: 28,
+          borderRadius: 5,
+          ...props
+        }]}
+      onPress={handlePress}
+      activeOpacity={0.5}
+      onPressIn={() => { setActive(true) }}
+      onPressOut={() => { setActive(false) }}
+    >
+      <Text style={[styles.btnText, { color: textColor, fontSize: textSize ? textSize : 14 }]}>{text}</Text>
+    </TouchableOpacity>
+  );
+};
+
+
 const styles = StyleSheet.create({
-  defaultBtn: {
+  roundedBtn: {
     borderRadius: 25,
     height: 50,
     alignItems: "center",
@@ -160,7 +204,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: "row",
   },
-  defaultBtnActive: {
+  roundedBtnActive: {
     borderRadius: 25,
     height: 50,
     alignItems: "center",
@@ -174,13 +218,49 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 1.84,
     elevation: 2,
-    borderWidth: 2,
+    display: 'flex',
+    flexDirection: "row"
+  },
+  defaultBtn: {
+    borderRadius: 8,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.primary,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 2.84,
+    elevation: 5,
+    display: 'flex',
+    flexDirection: "row",
+  },
+  defaultBtnActive: {
+    borderRadius: 8,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.primary,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: -2,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 1.84,
+    elevation: 2,
     display: 'flex',
     flexDirection: "row"
   },
   btnText: {
-    marginLeft: 32,
-    fontSize: 16,
+    marginLeft: "auto",
+    marginRight: "auto",
+    fontSize: 20,
+    fontFamily: "Helvetica",
+    fontWeight: "400"
   },
   btnIconCircle: {
     width: 48,

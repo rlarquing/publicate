@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 
 import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
+import Account from "./screens/Account";
 // import Home from "./screens/Home";
 // import Register from "./screens/Register";
 // import Profile from "./screens/Profile";
@@ -62,6 +63,7 @@ const App = () => {
         initialRouteName={firstTime ? "Welcome" : "Login"}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Account" component={Account} />
         {/* <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Profile" component={Profile} />

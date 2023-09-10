@@ -244,8 +244,7 @@ const styles = StyleSheet.create({
         width: 191,
         height: 47,
         marginLeft: "auto",
-        marginRight: "auto",
-        textAlign: "center"
+        marginRight: "auto"
     },
     slogan: {
         color: "#333333",

@@ -4,13 +4,13 @@ import {
     Text,
     View,
     Image,
+    TextInput,
     TouchableOpacity,
     Dimensions
 } from "react-native";
-import { COLORS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput } from "../components";
+import { COLORS, SHADOWS, SIZES, assets } from "../constants";
+import { LoginLayout, DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import { LoginLayout } from "../layouts";
 // import jwtDecode from 'jwt-decode';
 
 const deviceHeight = Dimensions.get('window').height;
@@ -153,7 +153,7 @@ const Login = () => {
                 </View>
                 <View style={styles.signUpText}>
                     <Text style={{ fontSize: deviceHeight > 700 ? 14 : 11 }}>Si aún no tienes una cuenta, </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Account")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
                         <Text style={styles.signUp}>regístrate aquí.</Text>
                     </TouchableOpacity>
                 </View>

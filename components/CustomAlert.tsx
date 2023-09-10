@@ -44,7 +44,8 @@ interface ButtonProps {
     icon: any,
     iconSize: number,
     size: number,
-    textColor: string,
+    textColor?: string,
+    textSize? : number,
     backgroundColor: string
 };
 
