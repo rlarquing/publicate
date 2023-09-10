@@ -4,12 +4,10 @@ import {
     Text,
     View,
     Image,
-    TextInput,
-    TouchableOpacity,
     Dimensions
 } from "react-native";
-import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput, Line } from "../components";
+import { COLORS, FONTS, SIZES, assets } from "../constants";
+import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line } from "../components";
 import { useNavigation } from "@react-navigation/native";
 import { RegisterLayout } from "../layouts";
 // import jwtDecode from 'jwt-decode';
@@ -25,7 +23,7 @@ const Account = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
 
-    const loginEvent = async () => {
+    const loginEvent = async (type: boolean) => {
         // setShowLoading(true);
         // // Comprobar datos contra el API
         // let { msg, data } = await api.login(endpoints.app.login, {
@@ -57,7 +55,7 @@ const Account = () => {
         //                 token: token
         //             });
 
-        navigation.navigate("Home");
+        navigation.navigate("Plan", { type });
         //         }
         //     }
         // }
@@ -117,7 +115,7 @@ const Account = () => {
                             <Line size={"100%"} weight={1} />
                             {deviceHeight > 700 && <DefaultButton
                                 text={'Continuar'}
-                                handlePress={loginEvent}
+                                handlePress={() => loginEvent(false)}
                                 textSize={20}
                                 size={"100%"}
                                 btnBorderColor={COLORS.white}
@@ -128,7 +126,7 @@ const Account = () => {
                             />}
                             {deviceHeight <= 700 && <SmallButton
                                 text={'Continuar'}
-                                handlePress={loginEvent}
+                                handlePress={() => loginEvent(false)}
                                 textSize={14}
                                 size={"100%"}
                                 marginTop={5}
@@ -151,7 +149,7 @@ const Account = () => {
                             <Line size={"100%"} weight={1} />
                             {deviceHeight > 700 && <DefaultButton
                                 text={'Continuar'}
-                                handlePress={loginEvent}
+                                handlePress={() => loginEvent(true)}
                                 textSize={20}
                                 size={"100%"}
                                 btnBorderColor={COLORS.white}
@@ -162,7 +160,7 @@ const Account = () => {
                             />}
                             {deviceHeight <= 700 && <SmallButton
                                 text={'Continuar'}
-                                handlePress={loginEvent}
+                                handlePress={() => loginEvent(true)}
                                 textSize={14}
                                 size={"100%"}
                                 marginTop={5}
