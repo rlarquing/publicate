@@ -6,10 +6,11 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ScrollView
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line, Card } from "../components";
+import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line, Card, DialogBusiness } from "../components";
 import { Layout } from "../layouts";
 // import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
@@ -17,12 +18,16 @@ import { Layout } from "../layouts";
 const deviceHeight = Dimensions.get('window').height;
 
 const Home = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [avatarCard, setAvatarCard] = useState('');
+    const [nameCard, setNameCard] = useState('');
+    const [imageCard, setImageCard] = useState('');
+    const [addressCard, setAddressCard] = useState('');
+    const [timeCard, setTimeCard] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
+    const [showDialogBusiness, setShowDialogBusiness] = useState(false);
 
     const loginEvent = async () => {
         navigation.navigate("Home");
@@ -35,14 +40,70 @@ const Home = () => {
     // }
     // });
 
-    const businessList = () => {
-        <Card />
-    }
+    const data: any = [
+        {
+            avatar: assets.avatar,
+            name: "Nestor Pizzas",
+            image: assets.business1,
+            address: "Calle M #83 e Simon Reyes",
+            time: "Horario: 7:30 AM - 05:30 PM"
+        }
+        , {
+            avatar: assets.welcome_image,
+            name: "La Panameña",
+            image: assets.business4,
+            address: "Calle Libertad #62",
+            time: "Horario: 7:30 AM - 05:30 PM"
+        },
+        {
+            avatar: assets.people_table,
+            name: "Dulcería Dolores",
+            image: assets.business2,
+            address: "Calle Maceo #72 e A y B",
+            time: "Horario: 7:30 AM - 05:30 PM"
+        },
+        {
+            avatar: assets.logo,
+            name: "Panaderia Express",
+            image: assets.business6,
+            address: "Celle D #24 e Simon Reyes y Maceo",
+            time: "Horario: 7:30 AM - 05:30 PM"
+        }
+    ];
+
+    const businessList = data.map((item: any, index: number) =>
+        <Card key={index} avatar={item.avatar} title={item.name} image={item.image} address={item.address} time={item.time} handlePress={() => {
+            setNameCard(item.name);
+            setAvatarCard(item.avatar);
+            setImageCard(item.image);
+            setAddressCard(item.address);
+            setTimeCard(item.time);
+            setShowDialogBusiness(true);
+        }} />
+    );
 
     return (
         <Layout title={"Recomendaciones"} headerBackground={COLORS.orange} blackColor={true} children={
             <View style={styles.container}>
                 {showLoading && <Loading />}
+                {showDialogBusiness && <DialogBusiness
+                    title={nameCard}
+                    avatar={avatarCard}
+                    image={imageCard}
+                    address={addressCard}
+                    time={timeCard}
+                    backColor={COLORS.orange}
+                    open={showDialogBusiness}
+                    setOpen={setShowDialogBusiness}
+                    options={
+                        [
+                            { label: "Holguin", value: 3277 },
+                            { label: "Camaguey", value: 3454 },
+                            { label: "Ciego de Avila", value: 3457 },
+                            { label: "Moron", value: 3458 },
+                        ]
+                    }
+                />}
 
                 <CustomAlert
                     type={ALERT_TYPE.OK_ALERT}
@@ -71,44 +132,12 @@ const Home = () => {
                         }
                     ]}
                 />
-
-                <View style={styles.question}>
-                    <Text style={{ fontSize: deviceHeight > 700 ? 18 : 14 }}>¿Que tipo de Cuenta vas a crear?</Text>
-                </View>
-                
-                <View style={styles.card}>
-                    <View style={styles.leftSide}>
-                        <View style={styles.cardContent}>
-                            <Text style={styles.cardTitle}>Negocio</Text>
-                            <Text style={styles.description}>Cree una cuenta para promocionar todos sus porductos y servicios a todos los clientes de Publicate. Vea crecer su negocio y sus ingresos con nuestra platafaroma.</Text>
-                            <Line size={"100%"} weight={1} />
-                            {deviceHeight > 700 && <DefaultButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={20}
-                                size={"100%"}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                marginTop={5}
-                                activeOpacity={0.5}
-                            />}
-                            {deviceHeight <= 700 && <SmallButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={14}
-                                size={"100%"}
-                                marginTop={5}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                activeOpacity={0.5}
-                            />}
+                <View style={styles.page}>
+                    <ScrollView>
+                        <View style={styles.content}>
+                            {businessList}
                         </View>
-                    </View>
-                    <View style={styles.rightSide}>
-                        <Image style={styles.image} source={assets.business_man} />
-                    </View>
+                    </ScrollView>
                 </View>
             </View>
         } />
@@ -119,94 +148,21 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         flex: 1,
-        fontFamily: "Helvetica"
+        fontFamily: "Helvetica",
+        paddingTop: 10
     },
-    card: {
-        display: "flex",
-        flexDirection: "row",
-        width: "90%",
-        backgroundColor: COLORS.white,
-        alignItems: "flex-start",
-        justifyContent: "center",
-        alignContent: "flex-start",
-        top: 120,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: SIZES.extraLarge,
-        padding: SIZES.large,
-        borderRadius: 20,
-        shadowColor: COLORS.black,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        zIndex: 300
+    page: {
+        position: "relative",
+        height: "auto",
+        bottom: 0
     },
-    logo: {
-        top: -60,
-        width: deviceHeight > 700 ? 128 : 96,
-        height: deviceHeight > 700 ? 128 : 96,
-        marginLeft: "auto",
-        marginRight: "auto",
-        zIndex: 300
+    content: {
+        position: "relative",
+        minHeight: deviceHeight,
+        bottom: 0,
+        padding: 0,
+        paddingBottom: 150,
     },
-    imageBox: {
-        width: "100%",
-        height: 150,
-        top: 0,
-        position: "absolute",
-        zIndex: 500
-    },
-    image: {
-        width: "85%",
-        height: deviceHeight > 700 ? 140 : 96,
-        top: 10,
-        marginLeft: "auto",
-        marginRight: 0,
-        zIndex: 200
-    },
-    question: {
-        top: 90,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        alignContent: "center",
-        verticalAlign: "middle",
-        fontFamily: FONTS.regular,
-        fontWeight: "300",
-        marginLeft: "auto",
-        marginRight: "auto"
-    },
-    leftSide: {
-        width: "70%"
-    },
-    rightSide: {
-        width: "30%"
-    },
-    cardContent: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
-        verticalAlign: "top",
-        alignContent: "flex-start"
-    },
-    cardTitle: {
-        fontFamily: FONTS.title,
-        fontSize: 24,
-        color: COLORS.primary
-    },
-    description: {
-        fontFamily: FONTS.regular,
-        fontSize: 12,
-        fontWeight: "400",
-        color: COLORS.black,
-        lineHeight: 18,
-        textAlign: "justify"
-    }
 });
 
 export default Home;

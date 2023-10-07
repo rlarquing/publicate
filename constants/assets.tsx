@@ -55,6 +55,12 @@ import standing_people from '../assets/images/people-standing.png';
 import business_man from '../assets/images/business-man.png';
 import people_table from '../assets/images/people-table.png';
 import man_attention from '../assets/images/man-attention.png';
+import business1 from '../assets/images/business/business1.jpg';
+import business2 from '../assets/images/business/business2.jpg';
+import business3 from '../assets/images/business/business3.jpg';
+import business4 from '../assets/images/business/business4.jpg';
+import business5 from '../assets/images/business/business5.jpg';
+import business6 from '../assets/images/business/business6.jpg';
 // import logo from '../assets/images/logo.png';
 // import logo_big from '../assets/images/LOGORECLAMO.png';
 // import gradient from '../assets/images/gradient.png';
@@ -138,5 +144,11 @@ export default {
     arrow_down_icon,
     arrow_up_icon,
     show_password_icon,
-    hide_password_icon
+    hide_password_icon,
+    business1,
+    business2,
+    business3,
+    business4,
+    business5,
+    business6
 }

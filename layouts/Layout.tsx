@@ -112,8 +112,6 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         backgroundColor: COLORS.light.primary,
-        borderWidth: 1,
-        borderColor: COLORS.white,
         ...SHADOWS.card
     },
     header: {

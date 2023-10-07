@@ -1,78 +1,32 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 
-import { COLORS, assets } from "../constants";
-import { DefaultButton } from "./Button";
+import { COLORS, FONTS, SIZES, SHADOWS, assets } from "../constants";
+import { DefaultButton, SmallButton } from "./Button";
+import { Line } from "./Line";
 
-const Card = ({ data, handlePress, handlePay, handleRecharge }) => {
+const deviceHeight = Dimensions.get('window').height;
+
+const Card = ({ handlePress, avatar, title, image, address, time }: any) => {
   const navigation = useNavigation();
 
   return (
     <View
       style={styles.container}
     >
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={1}>
+        <Image style={styles.avatar} source={avatar} />
         <View style={styles.card}>
-          <View style={styles.leftSide}>
-            <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>Cliente</Text>
-              <Text style={styles.description}>Cree una cuenta para acceder a todos los negocios registrados en Publicate, usted podrá encontrar los productos y servicios que desee.</Text>
-              <Line size={"100%"} weight={1} />
-              {deviceHeight > 700 && <DefaultButton
-                text={'Continuar'}
-                handlePress={loginEvent}
-                textSize={20}
-                size={"100%"}
-                btnBorderColor={COLORS.white}
-                backgroundColor={COLORS.primary}
-                textColor={COLORS.white}
-                marginTop={5}
-                activeOpacity={0.5}
-              />}
-              {deviceHeight <= 700 && <SmallButton
-                text={'Continuar'}
-                handlePress={loginEvent}
-                textSize={14}
-                size={"100%"}
-                marginTop={5}
-                btnBorderColor={COLORS.white}
-                backgroundColor={COLORS.primary}
-                textColor={COLORS.white}
-                activeOpacity={0.5}
-              />}
-            </View>
-          </View>
-          <View style={styles.rightSide}>
-            <Image style={styles.image} source={assets.standing_people} />
+          <View style={styles.cardContent}>
+            <Image style={styles.image} source={image} />
+            <Text style={styles.cardTitle}>{title}</Text>
+            <Line size={"100%"} weight={1} />
+            <Text style={styles.address}>{address}</Text>
+            <Text style={styles.time}>{time}</Text>
           </View>
         </View>
       </TouchableOpacity>
-
-      <View style={styles.actions}>
-        <DefaultButton
-          text={'Pagar'}
-          handlePress={handlePay}
-          icon={assets.qr_scan_icon}
-          iconSize={24}
-          size={140}
-          btnBorderColor={COLORS.black}
-          backgroundColor={COLORS.cream}
-          textColor={COLORS.black}
-        />
-        <DefaultButton
-          text={'Recargar'}
-          handlePress={handleRecharge}
-          icon={assets.money_bag_icon}
-          iconSize={24}
-          size={140}
-          btnBorderColor={COLORS.black}
-          backgroundColor={COLORS.orange}
-          textColor={COLORS.black}
-          marginRight={0}
-          marginLeft={20}
-        />
-      </View>
     </View>
   );
 };
@@ -80,107 +34,118 @@ const Card = ({ data, handlePress, handlePay, handleRecharge }) => {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    width: 300,
-    height: 240,
+    width: "85%",
     bottom: 0,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
-    margin: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
+    marginBottom: 40
   },
-  cardBackground: {
+  cardContainer: {
     flex: 1,
+    width: "100%",
+    height: "auto",
+    position: "relative",
     alignItems: "center",
     justifyContent: "center",
-    position: 'absolute',
-    width: 300,
-    height: 185,
-    zIndex: 50,
-    borderWidth: 1,
-    borderColor: '#999999',
-    borderRadius: 10,
+    alignContent: "center",
+    marginBottom: 10
+  },
+  card: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: COLORS.white,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    alignContent: "flex-start",
+    top: 50,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: SIZES.base,
+    padding: SIZES.large,
+    borderRadius: 20,
     shadowColor: COLORS.black,
     shadowOffset: {
-      width: 5,
-      height: 7,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 2.42,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    // position: "absolute",
+    zIndex: 200
+  },
+  imageBox: {
+    width: "100%",
+    height: 150,
     top: 0,
+    position: "absolute",
+    zIndex: 500
+  },
+  image: {
+    width: "100%",
+    height: deviceHeight > 700 ? 140 : 96,
+    top: 20,
+    marginLeft: "auto",
+    marginRight: 0,
+    marginBottom: 30,
+    zIndex: 200
+  },
+  leftSide: {
+    width: "70%"
+  },
+  rightSide: {
+    width: "30%"
   },
   cardContent: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    verticalAlign: "top",
+    alignContent: "flex-start"
+  },
+  cardTitle: {
+    fontFamily: FONTS.bold,
+    fontSize: 14,
+    color: COLORS.black
+  },
+  address: {
+    fontFamily: FONTS.regular,
+    fontSize: 10,
+    fontWeight: "400",
+    color: COLORS.black,
+    lineHeight: 12,
+    textAlign: "justify"
+  },
+  time: {
+    fontFamily: FONTS.regular,
+    fontSize: 12,
+    fontWeight: "400",
+    color: COLORS.black,
+    lineHeight: 18,
+    textAlign: "justify"
+  },
+  avatar: {
+    width: 86,
+    height: 86,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: 180,
-    position: 'relative',
-    zIndex: 200,
-  },
-  info: {
+    position: 'absolute',
     top: 0,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: 185,
-    position: 'absolute',
-    zIndex: 250,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderWidth: 5,
+    borderColor: COLORS.white,
+    borderRadius: 50,
+    zIndex: 300
   },
-  cardNumber: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: 900,
-    left: 85,
-    top: 149,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 300,
-    height: 20,
-    zIndex: 251,
-    position: 'absolute',
-  },
-  actions: {
-    top: 190,
-    bottom: 0,
-    width: '80%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    position: "absolute",
-    zIndex: 500,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignContent: 'center',
-    left: 0,
-  },
-  qr: {
-    left: 10,
-    top: 37,
-    width: 72,
-    height: 72,
-    zIndex: 251,
-    position: 'absolute',
-  },
-  qrCode: {
-    width: 72,
-    height: 72,
-  },
-  cardValue: {
-    top: -5,
-    left: 95,
-    fontSize: 28,
-    color: COLORS.yellow
-  },
-  cardBand: {
-    width: '99.4%',
-    height: 8,
-    top: 23,
-    position: 'absolute'
-  }
 });
 
 

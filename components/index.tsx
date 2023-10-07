@@ -19,6 +19,7 @@ import { PlanCard } from "./PlanCard";
 import { ReturnAction } from "./ReturnAction";
 import { DefaultSelect, PickerSelect, DropdownSelect } from "./Select";
 import { DialogSelect, DialogSelectMultiple } from "./DialogSelect";
+import { DialogBusiness } from "./DialogBusiness";
 
 export {
     Card,
@@ -50,5 +51,6 @@ export {
     PickerSelect,
     DropdownSelect,
     DialogSelect,
-    DialogSelectMultiple
+    DialogSelectMultiple,
+    DialogBusiness
 };
