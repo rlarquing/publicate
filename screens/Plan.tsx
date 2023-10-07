@@ -8,26 +8,23 @@ import {
     ScrollView
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line } from "../components";
+import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, Line, DobleButton, ReturnAction } from "../components";
+import { PlanLayout } from "../layouts";
 import { useNavigation } from "@react-navigation/native";
-import { RegisterLayout } from "../layouts";
 // import jwtDecode from 'jwt-decode';
 
 const deviceHeight = Dimensions.get('window').height;
 
 const Plan = ({ route }: any) => {
     const navigation = useNavigation();
-    const {
-        type
-    } = route.params;
+    const { type } = route.params;
 
-    const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
 
-    const loginEvent = async () => {
+    const continueEvent = async (planSelected: number) => {
         // setShowLoading(true);
         // // Comprobar datos contra el API
         // let { msg, data } = await api.login(endpoints.app.login, {
@@ -59,10 +56,14 @@ const Plan = ({ route }: any) => {
         //                 token: token
         //             });
 
-        navigation.navigate("Home");
+        navigation.navigate('Register', { accountType: type, planType: planSelected });
         //         }
         //     }
         // }
+    }
+
+    const detailsEvent = async (planSelected: number) => {
+        navigation.navigate('PlanDetails', { accountType: type, planType: planSelected });
     }
 
     // useEffect(() => {
@@ -73,8 +74,9 @@ const Plan = ({ route }: any) => {
     // });
 
     return (
-        <RegisterLayout children={
+        <PlanLayout children={
             <View style={styles.container}>
+                <ReturnAction route={"Account"} marginTop={20} marginLeft={15} />
                 {showLoading && <Loading />}
 
                 <CustomAlert
@@ -120,31 +122,24 @@ const Plan = ({ route }: any) => {
                                         <View style={styles.cardInfo}>
                                             <Text style={styles.cardTitle}>Básico</Text>
                                             <View style={styles.price}>
-                                                <Text style={[styles.priceValue, { color: "#3B9F10" }]}>{type ? "$1500" : "$150"}</Text>
+                                                <Text style={[styles.priceValue, { color: "#3B9F10" }]}>{type ? "$250" : "$150"}</Text>
                                                 <Text style={[styles.priceText, { color: "#3B9F10" }]}>/mes</Text>
                                             </View>
                                         </View>
                                         <Line size={"100%"} weight={1} />
-                                        {deviceHeight > 700 && <DefaultButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={20}
+                                        {deviceHeight > 700 && <DobleButton
                                             size={"100%"}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
+                                            leftText={'Ver más detalles'}
+                                            leftHandlePress={() => detailsEvent(1)}
+                                            leftTextSize={14}
+                                            leftBackgroundColor={COLORS.primary}
+                                            leftTextColor={COLORS.black}
+                                            rightText={'Continuar'}
+                                            rightHandlePress={() => continueEvent(1)}
+                                            rightTextSize={18}
+                                            rightBackgroundColor={COLORS.primary}
+                                            rightTextColor={COLORS.white}
                                             marginTop={5}
-                                            activeOpacity={0.5}
-                                        />}
-                                        {deviceHeight <= 700 && <SmallButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={14}
-                                            size={"100%"}
-                                            marginTop={5}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
                                             activeOpacity={0.5}
                                         />}
                                     </View>
@@ -159,31 +154,24 @@ const Plan = ({ route }: any) => {
                                         <View style={styles.cardInfo}>
                                             <Text style={styles.cardTitle}>Pro</Text>
                                             <View style={styles.price}>
-                                                <Text style={[styles.priceValue, { color: "#1E8F33" }]}>{type ? "$1500" : "$200"}</Text>
+                                                <Text style={[styles.priceValue, { color: "#1E8F33" }]}>{type ? "$500" : "$200"}</Text>
                                                 <Text style={[styles.priceText, { color: "#1E8F33" }]}>/mes</Text>
                                             </View>
                                         </View>
                                         <Line size={"100%"} weight={1} />
-                                        {deviceHeight > 700 && <DefaultButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={20}
+                                        {deviceHeight > 700 && <DobleButton
                                             size={"100%"}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
+                                            leftText={'Ver más detalles'}
+                                            leftHandlePress={() => detailsEvent(2)}
+                                            leftTextSize={14}
+                                            leftBackgroundColor={COLORS.primary}
+                                            leftTextColor={COLORS.black}
+                                            rightText={'Continuar'}
+                                            rightHandlePress={() => continueEvent(2)}
+                                            rightTextSize={18}
+                                            rightBackgroundColor={COLORS.primary}
+                                            rightTextColor={COLORS.white}
                                             marginTop={5}
-                                            activeOpacity={0.5}
-                                        />}
-                                        {deviceHeight <= 700 && <SmallButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={14}
-                                            size={"100%"}
-                                            marginTop={5}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
                                             activeOpacity={0.5}
                                         />}
                                     </View>
@@ -198,31 +186,24 @@ const Plan = ({ route }: any) => {
                                         <View style={styles.cardInfo}>
                                             <Text style={styles.cardTitle}>Premiun</Text>
                                             <View style={styles.price}>
-                                                <Text style={[styles.priceValue, { color: "#27611D" }]}>{type ? "$1500" : "$250"}</Text>
+                                                <Text style={[styles.priceValue, { color: "#27611D" }]}>{type ? "$1000" : "$250"}</Text>
                                                 <Text style={[styles.priceText, { color: "#27611D" }]}>/mes</Text>
                                             </View>
                                         </View>
                                         <Line size={"100%"} weight={1} />
-                                        {deviceHeight > 700 && <DefaultButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={20}
+                                        {deviceHeight > 700 && <DobleButton
                                             size={"100%"}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
+                                            leftText={'Ver más detalles'}
+                                            leftHandlePress={() => detailsEvent(3)}
+                                            leftTextSize={14}
+                                            leftBackgroundColor={COLORS.primary}
+                                            leftTextColor={COLORS.black}
+                                            rightText={'Continuar'}
+                                            rightHandlePress={() => continueEvent(3)}
+                                            rightTextSize={18}
+                                            rightBackgroundColor={COLORS.primary}
+                                            rightTextColor={COLORS.white}
                                             marginTop={5}
-                                            activeOpacity={0.5}
-                                        />}
-                                        {deviceHeight <= 700 && <SmallButton
-                                            text={'Continuar'}
-                                            handlePress={loginEvent}
-                                            textSize={14}
-                                            size={"100%"}
-                                            marginTop={5}
-                                            btnBorderColor={COLORS.white}
-                                            backgroundColor={COLORS.primary}
-                                            textColor={COLORS.white}
                                             activeOpacity={0.5}
                                         />}
                                     </View>
@@ -351,7 +332,7 @@ const styles = StyleSheet.create({
         height: "auto",
         padding: 0,
         paddingTop: 10,
-        paddingBottom: 200
+        paddingBottom: 150
     },
     price: {
         display: "flex",

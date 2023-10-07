@@ -260,7 +260,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Helvetica",
         textAlign: "justify",
-        fontWeight: "500"
+        fontWeight: "500",
+        // lineHeight: 18
     },
     yellowBox: {
         width: deviceWidth,

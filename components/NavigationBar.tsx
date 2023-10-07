@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     Text
 } from "react-native";
-import { assets, COLORS, globals } from "../constants";
+import { assets, COLORS, FONTS, globals } from "../constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 
@@ -16,17 +16,19 @@ const NavigationBar = () => {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.navIcon} onPress={() => navigation.navigate("Home", { refresh: true })} activeOpacity={0.5}>
+                <Image style={[styles.image, route.name === 'Home' ? {tintColor: COLORS.primary} : {tintColor: COLORS.gray} ]} source={route.name === 'Home' ? assets.home_active : assets.home} />
+                <Text style={[styles.navText, route.name === 'Home' ? {color: COLORS.primary} : {color: COLORS.gray} ]}>Inicio</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={[styles.navIcon, route.name === 'Profile' ?
                 {
                     borderBottomWidth: 4,
                     borderBottomColor: COLORS.yellow,
                     borderBottomStartRadius: 2,
                     borderBottomEndRadius: 2
-                } : {}]} onPress={() => navigation.navigate("Profile")} activeOpacity={0.5}>
-                <Image style={styles.image} source={route.name === 'Profile' ? assets.profile_active : assets.profile} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.navHomeIcon} onPress={() => navigation.navigate("Home", { refresh: true })} activeOpacity={0.5}>
-                <Image style={styles.image} source={route.name === 'Home' ? assets.home_active : assets.home} />
+                } : {}]} onPress={() => navigation.navigate("Search")} activeOpacity={0.5}>
+                <Image style={[styles.image, route.name === 'Search' ? {tintColor: COLORS.primary} : {tintColor: COLORS.gray}]} source={assets.search} />
+                <Text style={[styles.navText, route.name === 'Search' ? {color: COLORS.primary} : {color: COLORS.gray} ]}>Buscar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navIcon, route.name === 'Settings' ?
                 {
@@ -34,8 +36,9 @@ const NavigationBar = () => {
                     borderBottomColor: COLORS.yellow,
                     borderBottomStartRadius: 2,
                     borderBottomEndRadius: 2
-                } : {}]} onPress={() => navigation.navigate("Settings")} activeOpacity={0.5}>
-                <Image style={styles.image} source={route.name === 'Settings' ? assets.settings_active : assets.settings} />
+                } : {}]} onPress={() => navigation.navigate("Favorites")} activeOpacity={0.5}>
+                <Image style={[styles.image, route.name === 'Favorites' ? {tintColor: COLORS.primary} : {tintColor: COLORS.gray} ]} source={route.name === 'Settings' ? assets.settings_active : assets.shield_icon} />
+                <Text style={[styles.navText, route.name === 'Favorites' ? {color: COLORS.primary} : {color: COLORS.gray} ]}>Favoritos</Text>
             </TouchableOpacity>
             {!globals.NETWORK_CONNECTED &&
                 <View style={styles.indicator}>
@@ -52,8 +55,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         verticalAlign: "middle",
         width: "auto",
-        height: 40,
-        maxHeight: 40,
+        height: 50,
+        maxHeight: 50,
         zIndex: 900,
         bottom: 0,
         left: 0,
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         paddingLeft: 20,
         paddingRight: 20,
-        borderTopColor: "#F0F0F0",
+        borderTopColor: COLORS.white,
         borderTopWidth: 1,
         shadowColor: COLORS.primary,
         shadowOffset: {
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 7,
-        backgroundColor: COLORS.orange,
+        backgroundColor: "#FDFDFD",
         position: 'absolute',
     },
     indicator: {
@@ -98,12 +101,18 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.red,
     },
     image: {
-        width: 32,
-        height: 32
+        width: 24,
+        height: 24,
+        tintColor: COLORS.black
     },
     navIcon: {
-        width: 32,
-        height: 32
+        width: 38,
+        height: 36,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        alignContent: "center",
+        justifyContent: "center"
     },
     navHomeIcon: {
         width: 55,
@@ -128,6 +137,11 @@ const styles = StyleSheet.create({
         borderColor: COLORS.orange,
         borderWidth: 2,
         zIndex: 100
+    },
+    navText: {
+        fontFamily: FONTS.regular,
+        fontSize: 9,
+        color: COLORS.black
     }
 });
 

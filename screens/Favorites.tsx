@@ -4,60 +4,28 @@ import {
     Text,
     View,
     Image,
+    TextInput,
+    TouchableOpacity,
     Dimensions
 } from "react-native";
-import { COLORS, FONTS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line, ReturnAction } from "../components";
-import { PlanLayout } from "../layouts";
-import { useNavigation } from "@react-navigation/native";
+import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
+import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line } from "../components";
+import { Layout } from "../layouts";
+// import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
 
 const deviceHeight = Dimensions.get('window').height;
 
-const Account = () => {
-    const navigation = useNavigation();
-
+const Favorites = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
 
-    const continueEvent = async (accountType: boolean) => {
-        // setShowLoading(true);
-        // // Comprobar datos contra el API
-        // let { msg, data } = await api.login(endpoints.app.login, {
-        //     email,
-        //     password
-        // });
-        // setShowLoading(false);
-
-        // if (msg && msg.statusCode) {
-        //     console.log('EL DATA: ', msg.message);
-        //     setTitleMessage(`ERROR`);
-        //     setErrorMessage('No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
-        //     // setErrorMessage(msg.message ? msg.message.toString() : 'No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
-        //     setShowErrorMessage(true);
-        // } else {
-        //     let { nombre, apellidos, email, token } = data;
-        //     if (token) {
-        //         let decode = jwtDecode(token);
-        //         // console.log('Contenido del TOKEN: ', decode);
-        //         if (decode && decode.id) {
-        //             sqliteStorage.openApp(decode.id);
-        //             // Guardar los datos en la BD local
-        //             sqliteStorage.addUser({
-        //                 name: nombre,
-        //                 lastname: apellidos,
-        //                 email,
-        //                 logged: 1,
-        //                 userId: decode.id,
-        //                 token: token
-        //             });
-
-        navigation.navigate('Plan', { type: accountType });
-        //         }
-        //     }
-        // }
+    const loginEvent = async () => {
+        navigation.navigate("Home");
     }
 
     // useEffect(() => {
@@ -68,9 +36,8 @@ const Account = () => {
     // });
 
     return (
-        <PlanLayout children={
+        <Layout title={"Favoritos"} headerBackground={COLORS.dark.red} blackColor={false} children={
             <View style={styles.container}>
-                <ReturnAction route={"Login"} marginTop={20} marginLeft={15}/>
                 {showLoading && <Loading />}
 
                 <CustomAlert
@@ -101,9 +68,6 @@ const Account = () => {
                     ]}
                 />
 
-                <View style={styles.imageBox} >
-                    <Image style={styles.logo} source={assets.account_icon} />
-                </View>
                 <View style={styles.question}>
                     <Text style={{ fontSize: deviceHeight > 700 ? 18 : 14 }}>¿Que tipo de Cuenta vas a crear?</Text>
                 </View>
@@ -115,9 +79,7 @@ const Account = () => {
                             <Line size={"100%"} weight={1} />
                             {deviceHeight > 700 && <DefaultButton
                                 text={'Continuar'}
-                                handlePress={() => {
-                                    continueEvent(false);
-                                }}
+                                handlePress={loginEvent}
                                 textSize={20}
                                 size={"100%"}
                                 btnBorderColor={COLORS.white}
@@ -128,9 +90,7 @@ const Account = () => {
                             />}
                             {deviceHeight <= 700 && <SmallButton
                                 text={'Continuar'}
-                                handlePress={() => {
-                                    continueEvent(false);
-                                }}
+                                handlePress={loginEvent}
                                 textSize={14}
                                 size={"100%"}
                                 marginTop={5}
@@ -153,9 +113,7 @@ const Account = () => {
                             <Line size={"100%"} weight={1} />
                             {deviceHeight > 700 && <DefaultButton
                                 text={'Continuar'}
-                                handlePress={() => {
-                                    continueEvent(true);
-                                }}
+                                handlePress={loginEvent}
                                 textSize={20}
                                 size={"100%"}
                                 btnBorderColor={COLORS.white}
@@ -166,9 +124,7 @@ const Account = () => {
                             />}
                             {deviceHeight <= 700 && <SmallButton
                                 text={'Continuar'}
-                                handlePress={() => {
-                                    continueEvent(true);
-                                }}
+                                handlePress={loginEvent}
                                 textSize={14}
                                 size={"100%"}
                                 marginTop={5}
@@ -282,4 +238,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Account;
+export default Favorites;

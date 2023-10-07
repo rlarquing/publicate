@@ -9,14 +9,15 @@ import {
 } from "react-native";
 import { COLORS, SIZES, assets } from "../constants";
 import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput } from "../components";
-import { useNavigation } from "@react-navigation/native";
 import { LoginLayout } from "../layouts";
+import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
 
 const deviceHeight = Dimensions.get('window').height;
 
 const Login = () => {
     const navigation = useNavigation();
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
         marginRight: "auto"
     },
     signUp: {
-        color: COLORS.link,
+        color: COLORS.dark.orange,
         fontSize: deviceHeight > 700 ? 14 : 11,
         width: "100%",
         textAlign: "center",

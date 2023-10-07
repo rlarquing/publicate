@@ -13,16 +13,39 @@ const Card = ({ data, handlePress, handlePay, handleRecharge }) => {
       style={styles.container}
     >
       <TouchableOpacity onPress={handlePress}>
-        <View style={styles.cardContent}>
-          <View style={styles.info}>
-            <View style={[styles.cardBand, {backgroundColor: data.isbonificada ? '#0000FF' : '#FF0000'}]}></View>
-            <View style={styles.qr}>
-              <Image style={styles.qrCode} source={assets.qrCode} />
+        <View style={styles.card}>
+          <View style={styles.leftSide}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardTitle}>Cliente</Text>
+              <Text style={styles.description}>Cree una cuenta para acceder a todos los negocios registrados en Publicate, usted podrá encontrar los productos y servicios que desee.</Text>
+              <Line size={"100%"} weight={1} />
+              {deviceHeight > 700 && <DefaultButton
+                text={'Continuar'}
+                handlePress={loginEvent}
+                textSize={20}
+                size={"100%"}
+                btnBorderColor={COLORS.white}
+                backgroundColor={COLORS.primary}
+                textColor={COLORS.white}
+                marginTop={5}
+                activeOpacity={0.5}
+              />}
+              {deviceHeight <= 700 && <SmallButton
+                text={'Continuar'}
+                handlePress={loginEvent}
+                textSize={14}
+                size={"100%"}
+                marginTop={5}
+                btnBorderColor={COLORS.white}
+                backgroundColor={COLORS.primary}
+                textColor={COLORS.white}
+                activeOpacity={0.5}
+              />}
             </View>
-            <Text style={styles.cardValue}>${parseInt(data.valor_inicial)}</Text>
-            <Text style={styles.cardNumber}>{data.folio}</Text>
           </View>
-          <Image style={styles.cardBackground} source={assets.card_background} />
+          <View style={styles.rightSide}>
+            <Image style={styles.image} source={assets.standing_people} />
+          </View>
         </View>
       </TouchableOpacity>
 

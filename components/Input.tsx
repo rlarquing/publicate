@@ -1,20 +1,27 @@
-import { View, Image, StyleSheet, Dimensions, TextInput } from "react-native";
-import { COLORS, FONTS } from "../constants";
+import React, { useState } from "react";
+import { View, Image, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
+import { COLORS, FONTS, assets } from "../constants";
 
 const deviceHeight = Dimensions.get('window').height;
 
 export const DefaultInput = ({ text, placeholder, textColor, handleTyping, size, textSize, icon, iconSize, marginBottom, type, ...props }: any) => {
+    const [showPassword, setShowPassword] = useState(true);
+
     return (
         <View style={[styles.inputView, { width: size, marginBottom: marginBottom, ...props }]}>
             <Image style={styles.iconInput} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={icon} />
             <TextInput
-                style={[styles.textInput, { color: textColor, fontSize: textSize }]}
+                style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize }]}
                 placeholder={placeholder}
                 placeholderTextColor={COLORS.placeholderTextColor}
-                secureTextEntry={type && type === "password" ? true : false}
-                onChangeText={(text) => handleTyping}
+                secureTextEntry={type && type === "password" ? showPassword : false}
+                onChangeText={(text) => handleTyping(text)}
                 textContentType={type}
+                cursorColor={COLORS.primary}
             />
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                {type && type === "password" && <Image style={styles.iconAction} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={showPassword ? assets.hide_password_icon : assets.show_password_icon} />}
+            </TouchableOpacity>
         </View>
     );
 };
@@ -45,6 +52,14 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         left: 10,
-        top: 8
+        top: 8,
+        tintColor: COLORS.light.textGray
+    },
+    iconAction: {
+        width: 20,
+        height: 20,
+        right: 10,
+        top: 8,
+        tintColor: COLORS.light.textGray
     }
 });

@@ -14,6 +14,11 @@ import { CustomAlert, ICON_COLOR, ALERT_TYPE } from './CustomAlert';
 import Loading from "./Loading";
 import { DefaultInput } from "./Input";
 import { Line } from "./Line";
+import { DobleButton } from "./DobleButton";
+import { PlanCard } from "./PlanCard";
+import { ReturnAction } from "./ReturnAction";
+import { DefaultSelect, PickerSelect, DropdownSelect } from "./Select";
+import { DialogSelect, DialogSelectMultiple } from "./DialogSelect";
 
 export {
     Card,
@@ -37,5 +42,13 @@ export {
     ALERT_TYPE,
     Loading,
     DefaultInput,
-    Line
+    Line,
+    DobleButton,
+    PlanCard,
+    ReturnAction,
+    DefaultSelect,
+    PickerSelect,
+    DropdownSelect,
+    DialogSelect,
+    DialogSelectMultiple
 };

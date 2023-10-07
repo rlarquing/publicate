@@ -17,7 +17,7 @@ import { CustomAlert, ALERT_TYPE, ICON_COLOR } from "../components/CustomAlert";
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children, title, headerBackground, blackColor }: any) => {
     const navigation = useNavigation();
     const [visibleAlertSalir, setVisibleAlertSalir] = useState(false);
 
@@ -38,7 +38,7 @@ const Layout = ({ children }: any) => {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: headerBackground ? headerBackground : COLORS.light.orange }}>
             <FocusedStatusBar background={COLORS.black} />
 
             <CustomAlert
@@ -76,26 +76,22 @@ const Layout = ({ children }: any) => {
                 actions={{
                     yes: 'Si',
                     yesCallback: () => {
-                        sqliteStorage.removeAllUsers();
+                        // sqliteStorage.removeAllUsers();
                         BackHandler.exitApp();
                     },
                     cancel: 'No'
                 }}
             />
 
-            <View style={styles.topWave}>
-                <Image style={styles.logo} source={assets.logo} />
-                <Image style={styles.topWaveImage} source={assets.layout_top_wave} />
-                <Text style={styles.title}>MONEDERO DE TRANSPAGO</Text>
+            <View style={styles.header}>
+                <Image style={styles.avatar} source={assets.logo} />
+                <Text style={[styles.title, blackColor ? { color: COLORS.black } : { color: COLORS.white }]}>{title}</Text>
+                <Image style={[styles.menuIcon, blackColor ? { tintColor: COLORS.black } : { tintColor: COLORS.white }]} source={assets.menu} />
             </View>
             <View style={styles.container}>
                 {children}
             </View>
-            <View style={styles.bottomWave}>
-                <Image style={styles.bottomWaveImage} source={assets.bottom_wave} />
-            </View>
             <NavigationBar />
-            <Image style={styles.background} source={assets.gradient_background} />
         </SafeAreaView>
     );
 }
@@ -115,57 +111,44 @@ const styles = StyleSheet.create({
         borderTopRightRadius: SIZES.extraLarge,
         top: 0,
         bottom: 0,
+        backgroundColor: COLORS.light.primary,
+        borderWidth: 1,
+        borderColor: COLORS.white,
         ...SHADOWS.card
     },
-    topWave: {
+    header: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        alignContent: "center",
+        justifyContent: "space-around",
+        paddingLeft: 20,
+        paddingRight: 20,
         width: deviceWidth,
-        height: 130,
+        height: 80,
         zIndex: 100,
         top: 0
     },
-    topWaveImage: {
-        width: '100%',
+    menuIcon: {
+        right: 20,
+        width: 32,
+        height: 32,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute'
     },
-    bottomWave: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: deviceWidth,
-        height: 280,
-        position: "absolute",
-        zIndex: 100,
-        bottom: 0
-    },
-    bottomWaveImage: {
-        width: '100%',
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        position: 'absolute',
-    },
     title: {
         flex: 1,
-        width: 120,
         color: COLORS.light.textDarkGray,
         height: 30,
-        top: 65,
-        marginLeft: '66%',
-        marginBottom: 10,
         textAlign: 'center',
         alignItems: "center",
         justifyContent: "center",
-        fontSize: deviceHeight > 700 ? 14 : 10,
+        fontSize: deviceHeight > 700 ? 24 : 18,
         fontWeight: '900',
-        textShadowColor: COLORS.shadow,
-        textShadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        textShadowRadius: 2.22,
+        bottom: 0,
+        top: 10
     },
     image: {
         marginTop: 0,
@@ -173,11 +156,11 @@ const styles = StyleSheet.create({
         width: 216,
         height: 256,
     },
-    logo: {
-        marginLeft: 30,
-        marginTop: 50,
-        width: deviceHeight > 700 ? 180 : 140,
-        height: deviceHeight > 700 ? 54 : 42,
+    avatar: {
+        left: 20,
+        top: 15,
+        width: 46,
+        height: 46,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

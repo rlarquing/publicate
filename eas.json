@@ -15,10 +15,10 @@
         "credentialsSource": "local",
         "buildType": "apk",
         "distribution": "internal",
-        "node": "16.20.1",
+        "node": "18.12.1",
         "env": {
-          "API_URL": "https://mapas.geocuba.cu/apimayabeque",
-          "SOCKET_URL":"https://mapas.geocuba.cu/",
+          "API_URL": "",
+          "SOCKET_URL":"",
           "ENV": "prod",
           "DATABASE": "publicate"
         }

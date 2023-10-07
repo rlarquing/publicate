@@ -6,6 +6,11 @@ node_modules/
 # Expo
 .expo/
 .idea/
+.ios/
+ios/
+.android/
+.vscode/
+android/
 dist/
 web-build/
 

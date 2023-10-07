@@ -14,6 +14,7 @@ export const COLORS = {
     green: "#00F800",
     red: "#CA1515",
     accent: "#F6F0E6",
+    brown: "#320702",
 
     light: {
         primary: "#F4F4F4",
@@ -27,15 +28,21 @@ export const COLORS = {
         orange: "#F6C387",
         cream: "#E6FFEF",
         green: '#deffe3',
-        textSecondary: "#757575"
+        textSecondary: "#757575",
+        superblue: "#2d3e48"
     },
     dark: {
+        red: "#751414",
+        gray: "#252525",
         primary: "#F8C822",
         borderColor: "#ADADAD",
         textGray: "#CDCDCD",
         textDarkGray: "#858585",
         orange: "#BB5402",
+        darkGray: "#1F1F1F",
         cream: "#657939",
+        brown: "#2e2b2d",
+        superblue: "#222a2f"
     }
 }
 

@@ -7,8 +7,11 @@ import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
 import Account from "./screens/Account";
 import Plan from "./screens/Plan";
-// import Home from "./screens/Home";
-// import Register from "./screens/Register";
+import PlanDetails from "./screens/PlanDetails";
+import Register from "./screens/Register";
+import Home from "./screens/Home";
+import Search from "./screens/Search";
+import Favorites from "./screens/Favorites";
 // import Profile from "./screens/Profile";
 // import Settings from "./screens/Settings";
 // import AddCard from "./screens/AddCard";
@@ -66,9 +69,12 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="Plan" component={Plan} />
-        {/* <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="PlanDetails" component={PlanDetails} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Favorites" component={Favorites} />
+        {/* <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="AddCardOld" component={AddCardOld} /> */}
