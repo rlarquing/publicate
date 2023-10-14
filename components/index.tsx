@@ -20,9 +20,12 @@ import { ReturnAction } from "./ReturnAction";
 import { DefaultSelect, PickerSelect, DropdownSelect } from "./Select";
 import { DialogSelect, DialogSelectMultiple } from "./DialogSelect";
 import { DialogBusiness } from "./DialogBusiness";
+import { RatingBadge, FavoriteBadge, DefaultBadge } from "./RatingBadge";
+import MiniCard from "./MiniCard";
 
 export {
     Card,
+    MiniCard,
     // Pay,
     Recharge,
     Details,
@@ -52,5 +55,8 @@ export {
     DropdownSelect,
     DialogSelect,
     DialogSelectMultiple,
-    DialogBusiness
+    DialogBusiness,
+    RatingBadge,
+    FavoriteBadge,
+    DefaultBadge
 };

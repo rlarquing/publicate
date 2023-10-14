@@ -7,7 +7,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 const deviceHeight = Dimensions.get('window').height;
 
 export const DefaultSelect = ({ active, setActive, text, placeholder, textColor, size, textSize, icon, iconSize, marginBottom, type, ...props }: any) => {
-    
+
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => setActive(!active)} activeOpacity={1} style={[styles.inputView, { width: size, marginBottom: marginBottom, ...props }]}>
@@ -53,9 +53,9 @@ export const PickerSelect = ({ options, selected, setSelected, icon, size, textC
     } else {
         <View style={[styles.inputView, { width: size ? size : "auto", ...props }]}>
             <Image style={styles.iconInput} width={20} height={20} source={icon} />
-            <Text
-                style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize ? textSize : 14 }]}
-            >No hay elementos</Text>
+            <Text style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize ? textSize : 14 }]}>
+                No hay elementos
+            </Text>
         </View>
     }
 };
@@ -85,9 +85,9 @@ export const DropdownSelect = ({ options, setOptions, selected, setSelected, ico
     } else {
         <View style={[styles.inputView, { width: size ? size : "auto", ...props }]}>
             <Image style={styles.iconInput} width={20} height={20} source={icon} />
-            <Text
-                style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize ? textSize : 14 }]}
-            >No hay elementos</Text>
+            <Text style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize ? textSize : 14 }]}>
+                No hay elementos
+            </Text>
         </View>
     }
 };

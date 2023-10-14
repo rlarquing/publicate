@@ -3,28 +3,22 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 
 import { COLORS, FONTS, SIZES, SHADOWS, assets } from "../constants";
-import { Line } from "./Line";
-import { RatingBadge } from "./RatingBadge";
+import { FavoriteBadge } from "./RatingBadge";
 
 const deviceHeight = Dimensions.get('window').height;
 
-const Card = ({ handlePress, avatar, title, image, address, time, rate }: any) => {
+const ProductCard = ({ handlePress, title, image, description, rate }: any) => {
   const navigation = useNavigation();
 
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={1}>
-        <Image style={styles.avatar} source={avatar} />
         <View style={styles.card}>
           <View style={styles.cardContent}>
             <Image style={styles.image} source={image} />
-            <RatingBadge size={75} weight={35} color={COLORS.primary} value={rate} left={"70%"} top={"60%"}/>
+            <FavoriteBadge size={24} color={COLORS.primary} value={rate} left={"70%"} top={"60%"} />
             <Text style={styles.cardTitle}>{title}</Text>
-            <Line size={"100%"} weight={1} />
-            <Text style={styles.address}>{address}</Text>
-            <Text style={styles.time}>{time}</Text>
+            <Text style={styles.description}>{description}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -36,64 +30,68 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     width: "85%",
-    bottom: 0,
+    top: 0,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 40
+    marginBottom: 5
   },
   cardContainer: {
     flex: 1,
-    width: "100%",
+    width: 150,
     height: "auto",
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
-    marginBottom: 10
+    marginRight: 10
   },
   card: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    backgroundColor: COLORS.white,
+    height: 270,
+    maxHeight: 270,
+    backgroundColor: "#FDFDFD",
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "flex-start",
-    top: 50,
+    top: 0,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: SIZES.base,
-    padding: SIZES.large,
+    padding: SIZES.medium,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: COLORS.white,
     shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.75,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 7,
     // position: "absolute",
     zIndex: 200
   },
   imageBox: {
     width: "100%",
-    height: 150,
+    height: 180,
     top: 0,
     position: "absolute",
     zIndex: 500
   },
   image: {
     width: "100%",
-    height: deviceHeight > 700 ? 140 : 96,
-    top: 20,
+    height: 180,
+    top: 0,
     marginLeft: "auto",
     marginRight: 0,
-    marginBottom: 30,
+    marginBottom: 10,
     zIndex: 200
   },
   leftSide: {
@@ -114,23 +112,17 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontFamily: FONTS.bold,
     fontSize: 14,
-    color: COLORS.black
+    color: COLORS.primary,
+    fontWeight: "900"
   },
-  address: {
-    fontFamily: FONTS.regular,
-    fontSize: 10,
-    fontWeight: "400",
-    color: COLORS.black,
-    lineHeight: 12,
-    textAlign: "justify"
-  },
-  time: {
+  description: {
+    width: "100%",
     fontFamily: FONTS.regular,
     fontSize: 12,
     fontWeight: "400",
     color: COLORS.black,
-    lineHeight: 18,
-    textAlign: "justify"
+    lineHeight: 12,
+    textAlign: "left"
   },
   avatar: {
     width: 86,
@@ -150,4 +142,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Card;
+export default ProductCard;

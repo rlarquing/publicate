@@ -4,12 +4,12 @@ import { COLORS, FONTS, assets } from "../constants";
 
 const deviceHeight = Dimensions.get('window').height;
 
-export const DefaultInput = ({ text, placeholder, textColor, handleTyping, size, textSize, icon, iconSize, marginBottom, type, ...props }: any) => {
+export const DefaultInput = ({ text, placeholder, textColor, handleTyping, size, textSize, icon, iconColor, iconSize, marginBottom, type, ...props }: any) => {
     const [showPassword, setShowPassword] = useState(true);
 
     return (
         <View style={[styles.inputView, { width: size, marginBottom: marginBottom, ...props }]}>
-            <Image style={styles.iconInput} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={icon} />
+            <Image style={[styles.iconInput, { tintColor: iconColor ? iconColor : COLORS.black }]} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={icon} />
             <TextInput
                 style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize }]}
                 placeholder={placeholder}

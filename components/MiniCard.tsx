@@ -8,7 +8,7 @@ import { RatingBadge } from "./RatingBadge";
 
 const deviceHeight = Dimensions.get('window').height;
 
-const Card = ({ handlePress, avatar, title, image, address, time, rate }: any) => {
+const MiniCard = ({ handlePress, avatar, title, image, address, time, rate }: any) => {
   const navigation = useNavigation();
 
   return (
@@ -16,15 +16,19 @@ const Card = ({ handlePress, avatar, title, image, address, time, rate }: any) =
       style={styles.container}
     >
       <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={1}>
-        <Image style={styles.avatar} source={avatar} />
         <View style={styles.card}>
           <View style={styles.cardContent}>
-            <Image style={styles.image} source={image} />
-            <RatingBadge size={75} weight={35} color={COLORS.primary} value={rate} left={"70%"} top={"60%"}/>
-            <Text style={styles.cardTitle}>{title}</Text>
-            <Line size={"100%"} weight={1} />
-            <Text style={styles.address}>{address}</Text>
-            <Text style={styles.time}>{time}</Text>
+            <View style={styles.leftSide}>
+              <Image style={styles.avatar} source={avatar} />
+              <RatingBadge size={50} weight={25} color={COLORS.primary} value={rate} top={"75%"} iconSize={12} textSize={10}/>
+            </View>
+            <View style={styles.middleSide}>
+              <Text style={styles.cardTitle}>{title}</Text>
+              <Text style={styles.address}>{address}</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Text style={styles.time}>{time}</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 40
+    marginBottom: 5
   },
   cardContainer: {
     flex: 1,
@@ -59,11 +63,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
+    height: 120,
     backgroundColor: COLORS.white,
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "flex-start",
-    top: 50,
+    top: 0,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: SIZES.base,
@@ -97,15 +102,32 @@ const styles = StyleSheet.create({
     zIndex: 200
   },
   leftSide: {
-    width: "70%"
+    width: "30%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center"
+  },
+  middleSide: {
+    width: "50%"
   },
   rightSide: {
-    width: "30%"
+    width: "20%",
+    height: 90,
+    bottom: 0,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    borderLeftWidth: 1,
+    borderLeftColor: COLORS.light.borderColor,
+    paddingLeft: 5
   },
   cardContent: {
     width: "100%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     verticalAlign: "top",
@@ -114,7 +136,9 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontFamily: FONTS.bold,
     fontSize: 14,
-    color: COLORS.black
+    color: COLORS.primary,
+    textAlign: "center",
+    justifyContent: "center"
   },
   address: {
     fontFamily: FONTS.regular,
@@ -122,15 +146,18 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: COLORS.black,
     lineHeight: 12,
-    textAlign: "justify"
+    textAlign: "justify",
+    paddingHorizontal: 5
   },
   time: {
+    top: 0,
+    width: "100%",
     fontFamily: FONTS.regular,
     fontSize: 12,
     fontWeight: "400",
     color: COLORS.black,
     lineHeight: 18,
-    textAlign: "justify"
+    textAlign: "center"
   },
   avatar: {
     width: 86,
@@ -150,4 +177,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Card;
+export default MiniCard;

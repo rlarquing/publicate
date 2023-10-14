@@ -17,7 +17,7 @@ const deviceHeight = Dimensions.get('window').height;
 
 const Login = () => {
     const navigation = useNavigation();
-    
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -56,8 +56,15 @@ const Login = () => {
         //                 userId: decode.id,
         //                 token: token
         //             });
+        if (email === "leandro.campos.rojas@gmail.com" && password === "Abc123") {
+            navigation.navigate("Home");
+        } else {
+            setTitleMessage(`ERROR`);
+            setErrorMessage('No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
+            // setErrorMessage(msg.message ? msg.message.toString() : 'No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
+            setShowErrorMessage(true);
+        }
 
-        navigation.navigate("Home");
         //         }
         //     }
         // }

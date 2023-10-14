@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    Text,
     View,
-    Image,
-    TextInput,
-    TouchableOpacity,
     Dimensions,
     ScrollView
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line, Card, DialogBusiness } from "../components";
+import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, Card, DialogBusiness } from "../components";
 import { Layout } from "../layouts";
+import ProductCard from "../components/ProductCard";
+import { DialogProduct } from "../components/DialogProduct";
 // import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
 
@@ -20,14 +18,23 @@ const deviceHeight = Dimensions.get('window').height;
 const Home = () => {
     const [avatarCard, setAvatarCard] = useState('');
     const [nameCard, setNameCard] = useState('');
+    const [titleCard, setTitleCard] = useState('');
     const [imageCard, setImageCard] = useState('');
     const [addressCard, setAddressCard] = useState('');
     const [timeCard, setTimeCard] = useState('');
+    const [productsCard, setProductsCard] = useState('');
+    const [descriptionCard, setDescriptionCard] = useState('');
+    const [rateCard, setRateCard] = useState('');
+    const [priceCard, setPriceCard] = useState('');
+    const [availableCard, setAvailableCard] = useState('');
+    const [homeServiceCard, setHomeServiceCard] = useState('');
+
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
     const [showDialogBusiness, setShowDialogBusiness] = useState(false);
+    const [showDialogProduct, setShowDialogProduct] = useState(false);
 
     const loginEvent = async () => {
         navigation.navigate("Home");
@@ -46,40 +53,199 @@ const Home = () => {
             name: "Nestor Pizzas",
             image: assets.business1,
             address: "Calle M #83 e Simon Reyes",
-            time: "Horario: 7:30 AM - 05:30 PM"
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 4.6,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
         }
         , {
             avatar: assets.welcome_image,
             name: "La Panameña",
             image: assets.business4,
             address: "Calle Libertad #62",
-            time: "Horario: 7:30 AM - 05:30 PM"
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 4.3,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
+                }]
         },
         {
             avatar: assets.people_table,
             name: "Dulcería Dolores",
             image: assets.business2,
             address: "Calle Maceo #72 e A y B",
-            time: "Horario: 7:30 AM - 05:30 PM"
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 3.2,
+            products: [
+                {
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
         },
         {
             avatar: assets.logo,
             name: "Panaderia Express",
             image: assets.business6,
             address: "Celle D #24 e Simon Reyes y Maceo",
-            time: "Horario: 7:30 AM - 05:30 PM"
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 2.8,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
         }
     ];
 
+    const productsData = [
+        {
+            name: "Pizza napolitana",
+            image: assets.business1,
+            price: "$150",
+            available: 4,
+            homeService: true,
+            description: "Pizza napolitana de queso campesino.",
+            business: {
+                avatar: assets.avatar,
+                name: "Nestor Pizzas",
+                image: assets.business1,
+                address: "Calle M #83 e Simon Reyes",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 4.6
+            }
+        },
+        {
+            name: "Paquete de croquetas",
+            image: assets.business2,
+            price: "$300",
+            available: 4000,
+            homeService: false,
+            description: "Paquete de croquetas de pescados de mar.",
+            business: {
+                avatar: assets.people_table,
+                name: "Dulcería Dolores",
+                image: assets.business2,
+                address: "Calle Maceo #72 e A y B",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 3.2
+            }
+        },
+        {
+            name: "Paquete de fresas",
+            image: assets.business4,
+            price: "$600",
+            available: 100,
+            homeService: true,
+            description: "Paquete de fresas importadas de excelente calidad.",
+            business: {
+                avatar: assets.logo,
+                name: "Panaderia Express",
+                image: assets.business6,
+                address: "Celle D #24 e Simon Reyes y Maceo",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 2.8
+            }
+        }
+    ];
+
+    const productsList = productsData.map((item: any, index: number) =>
+        <ProductCard
+            style={styles.section}
+            key={index}
+            image={item.image}
+            title={item.price}
+            description={item.description}
+            handlePress={() => {
+                setTitleCard(item.name);
+                setImageCard(item.image);
+                setPriceCard(item.price);
+                setAvailableCard(item.available);
+                setHomeServiceCard(item.homeService);
+                setDescriptionCard(item.description);
+
+                setNameCard(item.business.name);
+                setAvatarCard(item.business.avatar);
+                setAddressCard(item.business.address);
+                setTimeCard(item.business.time);
+                setRateCard(item.business.rate);
+                setShowDialogProduct(true);
+            }}
+        />
+    );
+
     const businessList = data.map((item: any, index: number) =>
-        <Card key={index} avatar={item.avatar} title={item.name} image={item.image} address={item.address} time={item.time} handlePress={() => {
-            setNameCard(item.name);
-            setAvatarCard(item.avatar);
-            setImageCard(item.image);
-            setAddressCard(item.address);
-            setTimeCard(item.time);
-            setShowDialogBusiness(true);
-        }} />
+        <Card
+            key={index}
+            avatar={item.avatar}
+            title={item.name}
+            image={item.image}
+            address={item.address}
+            time={item.time}
+            rate={item.rate}
+            handlePress={() => {
+                setNameCard(item.name);
+                setAvatarCard(item.avatar);
+                setImageCard(item.image);
+                setAddressCard(item.address);
+                setTimeCard(item.time);
+                setProductsCard(item.products);
+                setRateCard(item.rate);
+                setShowDialogBusiness(true);
+            }}
+        />
     );
 
     return (
@@ -91,18 +257,28 @@ const Home = () => {
                     avatar={avatarCard}
                     image={imageCard}
                     address={addressCard}
+                    rate={rateCard}
                     time={timeCard}
+                    products={productsCard}
                     backColor={COLORS.orange}
                     open={showDialogBusiness}
                     setOpen={setShowDialogBusiness}
-                    options={
-                        [
-                            { label: "Holguin", value: 3277 },
-                            { label: "Camaguey", value: 3454 },
-                            { label: "Ciego de Avila", value: 3457 },
-                            { label: "Moron", value: 3458 },
-                        ]
-                    }
+                />}
+                {showDialogProduct && <DialogProduct
+                    title={titleCard}
+                    name={nameCard}
+                    avatar={avatarCard}
+                    image={imageCard}
+                    address={addressCard}
+                    description={descriptionCard}
+                    rate={rateCard}
+                    time={timeCard}
+                    available={availableCard}
+                    homeService={homeServiceCard}
+                    price={priceCard}
+                    backColor={COLORS.orange}
+                    open={showDialogProduct}
+                    setOpen={setShowDialogProduct}
                 />}
 
                 <CustomAlert
@@ -135,6 +311,13 @@ const Home = () => {
                 <View style={styles.page}>
                     <ScrollView>
                         <View style={styles.content}>
+                            <View style={styles.scrollArea}>
+                                <ScrollView horizontal={true}>
+                                    <View style={styles.scrollItems}>
+                                        {productsList}
+                                    </View>
+                                </ScrollView>
+                            </View>
                             {businessList}
                         </View>
                     </ScrollView>
@@ -161,7 +344,32 @@ const styles = StyleSheet.create({
         minHeight: deviceHeight,
         bottom: 0,
         padding: 0,
-        paddingBottom: 150,
+        paddingBottom: 80,
+    },
+    section: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: "100%",
+        position: "relative"
+    },
+    scrollArea: {
+        top: 0,
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        borderBottomColor: COLORS.light.borderColor,
+        borderBottomWidth: 1,
+        marginBottom: 30,
+        paddingBottom: 5
+    },
+    scrollItems: {
+        top: 10,
+        display: "flex",
+        flexDirection: "row",
+        width: "auto",
+        padding: SIZES.large
     },
 });
 

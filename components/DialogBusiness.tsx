@@ -2,44 +2,56 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Dimensions, ScrollView, Easing } from "react-native";
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants";
-import { DefaultInput } from "./Input";
 import { Line } from "./Line";
+import { RatingBadge } from "./RatingBadge";
+import ProductCard from "./ProductCard";
+import { DialogProduct } from "./DialogProduct";
 
 let { height, width } = Dimensions.get("window");
 
-export const DialogBusiness = ({ open, setOpen, avatar, title, image, address, time, backColor, options = [] }: any) => {
+export const DialogBusiness = ({ open, setOpen, avatar, title, address, time, rate, backColor, products = [] }: any) => {
   const navigation = useNavigation();
-  const [filter, setFilter] = useState('');
-  const [optionsFilter, setOptionsFilter] = useState(options);
-  const [label, setLabel] = useState("");
+  const [avatarCard, setAvatarCard] = useState('');
+  const [nameCard, setNameCard] = useState('');
+  const [titleCard, setTitleCard] = useState('');
+  const [imageCard, setImageCard] = useState('');
+  const [addressCard, setAddressCard] = useState('');
+  const [timeCard, setTimeCard] = useState('');
+  const [descriptionCard, setDescriptionCard] = useState('');
+  const [rateCard, setRateCard] = useState('');
+  const [priceCard, setPriceCard] = useState('');
+  const [availableCard, setAvailableCard] = useState('');
+  const [homeServiceCard, setHomeServiceCard] = useState('');
+  const [showDialogProduct, setShowDialogProduct] = useState(false);
 
   const bottom = useRef(new Animated.Value((height - 80))).current;
   const top = useRef(new Animated.Value((height - 80))).current;
+  console.log("Hola: ", products);
 
-  const optionsList = optionsFilter.map((itemObj: any, index: number) =>
-    <View style={styles.section} key={index}>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => { }}
-      >
-        {/* <Text style={{ color: value && itemObj.label === JSON.parse(value).label ? COLORS.dark.orange : COLORS.black }}>
-          {index + 1}- {itemObj.label}
-        </Text> */}
-      </TouchableOpacity>
-    </View >
+  const productsList = products.map((item: any, index: number) =>
+    <ProductCard
+      style={styles.section}
+      key={index}
+      image={item.image}
+      title={item.price}
+      description={item.description}
+      handlePress={() => {
+        setTitleCard(item.name);
+        setImageCard(item.image);
+        setPriceCard(item.price);
+        setAvailableCard(item.available);
+        setHomeServiceCard(item.homeService);
+        setDescriptionCard(item.description);
+
+        setNameCard(title);
+        setAvatarCard(avatar);
+        setAddressCard(address);
+        setTimeCard(time);
+        setRateCard(rate);
+        setShowDialogProduct(true);
+      }}
+    />
   );
-
-  const filterSelect = (newValue: string) => {
-    setFilter(newValue);
-    if (newValue && newValue !== "") {
-      let newValues = options.filter((itemObj: any, index: number) => {
-        return itemObj.label.indexOf(filter) !== -1;
-      });
-      setOptionsFilter(newValues);
-    } else {
-      setOptionsFilter(options);
-    }
-  }
 
   useEffect(() => {
     setOpen(true);
@@ -61,35 +73,64 @@ export const DialogBusiness = ({ open, setOpen, avatar, title, image, address, t
     setOpen(false);
   };
 
-  return (
-    <Animated.View style={[styles.page, {
-      transform: [{
-        translateY: open ? bottom : top,
-      }],
-      backgroundColor: backColor
-    }]} >
-      <View style={styles.back} ></View>
-      <View style={styles.container} >
-        <View style={styles.header} >
-          <TouchableOpacity style={styles.goBackBtn} onPress={() => { closeEvt() }}>
-            <Text style={styles.text}>Regresar</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.wrapper}>
-          <Image style={styles.avatar} source={avatar} />
-          <Text style={styles.title}>{title}</Text>
-          <Line size={"95%"} weight={1} marginLeft={"auto"} marginRight={"auto"} color={"#F0F0F0"} />
-          <ScrollView persistentScrollbar={true}>
-            <View style={styles.scrollArea}>
-              <View style={styles.scrollItems}>
-                {optionsList}
+  return showDialogProduct ?
+    (<DialogProduct
+      title={titleCard}
+      name={nameCard}
+      avatar={avatarCard}
+      image={imageCard}
+      address={addressCard}
+      description={descriptionCard}
+      rate={rateCard}
+      time={timeCard}
+      available={availableCard}
+      homeService={homeServiceCard}
+      price={priceCard}
+      backColor={backColor}
+      open={showDialogProduct}
+      setOpen={setShowDialogProduct}
+    />)
+    :
+    (
+      <Animated.View style={[styles.page, {
+        transform: [{
+          translateY: open ? bottom : top,
+        }],
+        backgroundColor: backColor
+      }]} >
+
+        <View style={styles.back} ></View>
+        <View style={styles.container} >
+          <View style={styles.header} >
+            <TouchableOpacity style={styles.goBackBtn} onPress={() => { closeEvt() }}>
+              <Text style={styles.returnText}>Regresar</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.wrapper}>
+            <Image style={styles.avatar} source={avatar} />
+            <Text style={styles.title}>{title}</Text>
+            <View style={styles.description}>
+              <RatingBadge size={75} weight={35} color={COLORS.primary} value={rate} right={0} top={0} />
+              <Line size={"100%"} weight={1} marginLeft={"auto"} marginRight={"auto"} color={COLORS.primary} top={15} marginBottom={25} />
+              <Text style={styles.label}>DIRECIÓN:</Text>
+              <Text style={styles.text}>{address}</Text>
+              <Text style={styles.label}>HORARIO:</Text>
+              <Text style={styles.text}>{time}</Text>
+              <Line size={"100%"} weight={1} marginLeft={"auto"} marginRight={"auto"} color={COLORS.primary} top={10} />
+              <View style={[styles.section, { marginTop: 20 }]}>
+                <Text style={styles.label}>Productos:</Text>
+                <TouchableOpacity style={styles.showMoreBtn} onPress={() => { closeEvt() }}>
+                  <Text style={styles.returnText}>Mostrar más</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.scrollArea}>
+                {productsList}
               </View>
             </View>
-          </ScrollView>
+          </View>
         </View>
-      </View>
-    </Animated.View>
-  );
+      </Animated.View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -137,7 +178,7 @@ const styles = StyleSheet.create({
   },
   page: {
     flex: 1,
-    width: '102%',
+    width: '100%',
     backgroundColor: COLORS.white,
     alignItems: "center",
     alignContent: "center",
@@ -153,6 +194,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "85%",
+    top: 0,
+    position: "relative",
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingLeft: SIZES.base,
@@ -174,15 +217,15 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     width: '100%',
-    color: COLORS.light.textDarkGray,
+    color: COLORS.primary,
     height: 30,
-    top: 15,
+    top: 120,
     marginLeft: 'auto',
     marginRight: 'auto',
     textAlign: 'center',
     alignItems: "center",
     justifyContent: "center",
-    fontSize: height > 700 ? 16 : 12,
+    fontSize: height > 700 ? 18 : 16,
     fontWeight: '400',
     textShadowColor: COLORS.shadow,
     textShadowOffset: {
@@ -190,7 +233,22 @@ const styles = StyleSheet.create({
       height: 1,
     },
     textShadowRadius: 2.22,
-    position: 'absolute'
+    position: 'absolute',
+    fontFamily: FONTS.title
+  },
+  label: {
+    flex: 1,
+    width: '100%',
+    color: COLORS.light.textGray,
+    height: 30,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'left',
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: height > 700 ? 18 : 16,
+    fontWeight: '800',
+    fontFamily: FONTS.regular
   },
   background: {
     borderTopLeftRadius: SIZES.extraLarge,
@@ -237,9 +295,11 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: FONTS.regular,
     fontWeight: "400",
-    color: COLORS.dark.orange,
     fontSize: height > 700 ? 14 : 12,
     zIndex: 900,
+    flex: 1,
+    width: '100%',
+    color: COLORS.black
   },
   list: {
     top: 38,
@@ -269,13 +329,13 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: "80%",
+    width: "100%",
     position: "relative"
   },
   scrollArea: {
     display: "flex",
     flexDirection: "row",
-    width: "100%"
+    width: "100%",
   },
   scrollItems: {
     display: "flex",
@@ -307,5 +367,22 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.42,
     shadowRadius: 2.22
+  },
+  description: {
+    position: "absolute",
+    top: 140,
+    justifyContent: "flex-start",
+    width: "100%"
+  },
+  returnText: {
+    fontFamily: FONTS.regular,
+    fontWeight: "400",
+    color: COLORS.dark.orange,
+    fontSize: height > 700 ? 14 : 12,
+    zIndex: 900,
+  },
+  showMoreBtn: {
+    width: 80,
+    zIndex: 300,
   },
 });
