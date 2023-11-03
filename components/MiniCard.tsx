@@ -19,8 +19,10 @@ const MiniCard = ({ handlePress, avatar, title, image, address, time, rate }: an
         <View style={styles.card}>
           <View style={styles.cardContent}>
             <View style={styles.leftSide}>
-              <Image style={styles.avatar} source={avatar} />
-              <RatingBadge size={50} weight={25} color={COLORS.primary} value={rate} top={"75%"} iconSize={12} textSize={10}/>
+              <View style={styles.miniCardAvatar}>
+                <Image style={styles.avatar} source={avatar} />
+              </View>
+              <RatingBadge size={50} weight={25} color={COLORS.primary} value={rate} top={"75%"} iconSize={12} textSize={10} />
             </View>
             <View style={styles.middleSide}>
               <Text style={styles.cardTitle}>{title}</Text>
@@ -30,6 +32,7 @@ const MiniCard = ({ handlePress, avatar, title, image, address, time, rate }: an
               <Text style={styles.time}>{time}</Text>
             </View>
           </View>
+          <View style={styles.background}></View>
         </View>
       </TouchableOpacity>
     </View>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 120,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.dark.orange,
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "flex-start",
@@ -84,6 +87,28 @@ const styles = StyleSheet.create({
     elevation: 5,
     // position: "absolute",
     zIndex: 200
+  },
+  background: {
+    position: 'absolute',
+    backgroundColor: COLORS.white,
+    width: "86%",
+    height: 120,
+    left: 0,
+    top: 0,
+    bottom: 0,
+    flex: 1,
+    zIndex: 1,
+    marginLeft: 0,
+    marginRight: 'auto',
+    borderRadius: 20,
+    shadowColor: COLORS.gray,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   imageBox: {
     width: "100%",
@@ -120,9 +145,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignContent: "center",
-    borderLeftWidth: 1,
-    borderLeftColor: COLORS.light.borderColor,
-    paddingLeft: 5
+    // borderLeftWidth: 1,
+    // borderLeftColor: COLORS.light.borderColor,
+    // paddingLeft: 5
   },
   cardContent: {
     width: "100%",
@@ -131,7 +156,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     verticalAlign: "top",
-    alignContent: "flex-start"
+    alignContent: "flex-start",
+    zIndex: 100
   },
   cardTitle: {
     fontFamily: FONTS.bold,
@@ -155,11 +181,22 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.regular,
     fontSize: 12,
     fontWeight: "400",
-    color: COLORS.black,
+    color: COLORS.white,
     lineHeight: 18,
     textAlign: "center"
   },
   avatar: {
+    width: 76,
+    height: 76,
+    alignItems: "center",
+    justifyContent: "center",
+    position: 'absolute',
+    top: 0,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 50
+  },
+  miniCardAvatar: {
     width: 86,
     height: 86,
     flex: 1,
@@ -172,7 +209,8 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: COLORS.white,
     borderRadius: 50,
-    zIndex: 300
+    zIndex: 200,
+    ...SHADOWS.dark
   },
 });
 

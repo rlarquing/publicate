@@ -5,10 +5,11 @@ import {
     View,
     Image,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Keyboard
 } from "react-native";
 import { COLORS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput } from "../components";
+import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, DefaultInput, SearchInput } from "../components";
 import { LoginLayout } from "../layouts";
 import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
@@ -56,7 +57,7 @@ const Login = () => {
         //                 userId: decode.id,
         //                 token: token
         //             });
-        if (email === "leandro.campos.rojas@gmail.com" && password === "Abc123") {
+        if (email === "leo@gmail.com" && password === "Abc123") {
             navigation.navigate("Home");
         } else {
             setTitleMessage(`ERROR`);
@@ -64,10 +65,24 @@ const Login = () => {
             // setErrorMessage(msg.message ? msg.message.toString() : 'No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
             setShowErrorMessage(true);
         }
-
         //         }
         //     }
         // }
+    }
+
+    const keyLoginEvent = async (evt: any) => {
+        if (evt.nativeEvent.key == "Enter") {
+            console.log("key: ", evt);
+            if (email === "leo" && password === "Abc123") {
+                navigation.navigate("Home");
+            } else {
+                setTitleMessage(`ERROR`);
+                setErrorMessage('No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
+                // setErrorMessage(msg.message ? msg.message.toString() : 'No se ha podido autenticar correctamente! Por favor verifique los datos y su conexión.');
+                setShowErrorMessage(true);
+            }
+            Keyboard.dismiss();
+        }
     }
 
     // useEffect(() => {
@@ -115,7 +130,7 @@ const Login = () => {
                     <Image style={styles.image} source={assets.login_image} />
                 </View>
                 <View style={styles.wrapper}>
-                    <DefaultInput
+                    <SearchInput
                         icon={assets.money_bag_icon}
                         size={"90%"}
                         type={"emailAddress"}
@@ -123,8 +138,9 @@ const Login = () => {
                         text={email}
                         placeholder={"Correo electrónico"}
                         handleTyping={setEmail}
+                        handleKeyPress={keyLoginEvent}
                     />
-                    <DefaultInput
+                    <SearchInput
                         icon={assets.key_icon}
                         size={"90%"}
                         type={"password"}
@@ -132,6 +148,7 @@ const Login = () => {
                         text={password}
                         placeholder={"Contraseña"}
                         handleTyping={setPassword}
+                        handleKeyPress={keyLoginEvent}
                     />
                     <View style={styles.forgotButtonBox}>
                         <TouchableOpacity>

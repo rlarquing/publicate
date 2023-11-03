@@ -18,6 +18,35 @@ export const DefaultInput = ({ text, placeholder, textColor, handleTyping, size,
                 onChangeText={(text) => handleTyping(text)}
                 textContentType={type}
                 cursorColor={COLORS.primary}
+                selectionColor={COLORS.orange}
+            />
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                {type && type === "password" && <Image style={styles.iconAction} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={showPassword ? assets.hide_password_icon : assets.show_password_icon} />}
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+export const SearchInput = ({ text, placeholder, textColor, handleTyping, handleKeyPress, size, textSize, icon, iconColor, iconSize, marginBottom, type, ...props }: any) => {
+    const [showPassword, setShowPassword] = useState(true);
+
+    return (
+        <View style={[styles.inputView, { width: size, marginBottom: marginBottom, ...props }]}>
+            <Image style={[styles.iconInput, { tintColor: iconColor ? iconColor : COLORS.black }]} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={icon} />
+            <TextInput
+                style={[styles.textInput, { color: textColor ? textColor : COLORS.black, fontSize: textSize }]}
+                placeholder={placeholder}
+                placeholderTextColor={COLORS.placeholderTextColor}
+                secureTextEntry={type && type === "password" ? showPassword : false}
+                onChangeText={(text) => handleTyping(text)}
+                textContentType={type}
+                cursorColor={COLORS.primary}
+                selectionColor={COLORS.orange}
+                onKeyPress={handleKeyPress}
+                autoCapitalize="sentences"
+                autoCorrect={true}
+                keyboardType="default"
+                returnKeyType="done"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 {type && type === "password" && <Image style={styles.iconAction} width={iconSize ? iconSize : 20} height={iconSize ? iconSize : 20} source={showPassword ? assets.hide_password_icon : assets.show_password_icon} />}

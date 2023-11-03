@@ -107,7 +107,9 @@ export const DialogBusiness = ({ open, setOpen, avatar, title, address, time, ra
             </TouchableOpacity>
           </View>
           <View style={styles.wrapper}>
-            <Image style={styles.avatar} source={avatar} />
+            <View style={styles.avatarBox}>
+              <Image style={styles.avatar} source={avatar} />
+            </View>
             <Text style={styles.title}>{title}</Text>
             <View style={styles.description}>
               <RatingBadge size={75} weight={35} color={COLORS.primary} value={rate} right={0} top={0} />
@@ -347,6 +349,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   avatar: {
+    width: 138,
+    height: 138,
+    alignItems: "center",
+    justifyContent: "center",
+    position: 'absolute',
+    top: 0,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 140,
+  },
+  avatarBox: {
     width: 148,
     height: 148,
     flex: 1,
@@ -356,17 +369,11 @@ const styles = StyleSheet.create({
     top: -30,
     marginLeft: "auto",
     marginRight: "auto",
-    borderWidth: 8,
+    borderWidth: 5,
     borderColor: COLORS.white,
     borderRadius: 150,
     zIndex: 300,
-    shadowColor: COLORS.shadow,
-    shadowOffset: {
-      width: 5,
-      height: 3,
-    },
-    shadowOpacity: 0.42,
-    shadowRadius: 2.22
+    ...SHADOWS.dark
   },
   description: {
     position: "absolute",

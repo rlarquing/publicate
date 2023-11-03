@@ -53,7 +53,7 @@ const Welcome = () => {
                 type={ALERT_TYPE.YES_OR_CANCEL_ALERT}
                 showAlert={visibleAlertSalir}
                 setShowAlert={setVisibleAlertSalir}
-                title={'Monedero de TransPago'}
+                title={'Publicate'}
                 message={'¿Quieres salir de la aplicación?'}
                 iconProps={{
                     name: 'md-help',
@@ -94,8 +94,12 @@ const Welcome = () => {
             />
 
             <View style={styles.header}>
-                <Image style={styles.logo} source={assets.inline_logo} />
-                <Text style={styles.slogan}>Bulevar virtual de negocios privados</Text>
+                <TouchableOpacity onPress={continueEvent} activeOpacity={0.5}>
+                    <Image style={styles.logo} source={assets.inline_logo} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={continueEvent} activeOpacity={0.5}>
+                    <Text style={styles.slogan}>Bulevar virtual de negocios privados</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.container}>
                 <Image style={styles.image} source={assets.welcome_image} />

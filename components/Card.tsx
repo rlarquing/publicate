@@ -16,7 +16,9 @@ const Card = ({ handlePress, avatar, title, image, address, time, rate }: any) =
       style={styles.container}
     >
       <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={1}>
+        <View style={styles.avatarBox}>
         <Image style={styles.avatar} source={avatar} />
+        </View>
         <View style={styles.card}>
           <View style={styles.cardContent}>
             <Image style={styles.image} source={image} />
@@ -133,6 +135,17 @@ const styles = StyleSheet.create({
     textAlign: "justify"
   },
   avatar: {
+    width: 76,
+    height: 76,
+    alignItems: "center",
+    justifyContent: "center",
+    position: 'absolute',
+    top: 0,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 50
+  },
+  avatarBox: {
     width: 86,
     height: 86,
     flex: 1,
@@ -145,7 +158,8 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: COLORS.white,
     borderRadius: 50,
-    zIndex: 300
+    zIndex: 300,
+    ...SHADOWS.dark
   },
 });
 

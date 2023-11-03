@@ -3,7 +3,9 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    ScrollView
+    ScrollView,
+    Text,
+    TouchableOpacity
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
 import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, Card, DialogBusiness } from "../components";
@@ -311,6 +313,12 @@ const Home = () => {
                 <View style={styles.page}>
                     <ScrollView>
                         <View style={styles.content}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.label}>Productos:</Text>
+                                <TouchableOpacity style={styles.showMoreBtn} onPress={() => { }}>
+                                    <Text style={styles.showMoreText}>Mostrar más</Text>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.scrollArea}>
                                 <ScrollView horizontal={true}>
                                     <View style={styles.scrollItems}>
@@ -318,7 +326,14 @@ const Home = () => {
                                     </View>
                                 </ScrollView>
                             </View>
+                            <View style={[styles.sectionHeader, { marginBottom: 5 }]}>
+                                <Text style={styles.label}>Negocios:</Text>
+                            </View>
                             {businessList}
+
+                            <TouchableOpacity style={[styles.showMoreBtn, { marginLeft: "auto", marginRight: "auto" }]} onPress={() => { }}>
+                                <Text style={styles.showMoreText}>Mostrar más</Text>
+                            </TouchableOpacity>
                         </View>
                     </ScrollView>
                 </View>
@@ -335,6 +350,7 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     page: {
+        paddingTop: 20,
         position: "relative",
         height: "auto",
         bottom: 0
@@ -371,6 +387,42 @@ const styles = StyleSheet.create({
         width: "auto",
         padding: SIZES.large
     },
+    sectionHeader: {
+        display: "flex",
+        flexDirection: 'row',
+        marginLeft: "auto",
+        marginRight: "auto",
+        alignItems: "center",
+        justifyContent: "center",
+        alignContent: "center",
+        width: "90%",
+        position: "relative"
+    },
+    showMoreText: {
+        fontFamily: FONTS.regular,
+        fontWeight: "400",
+        color: COLORS.dark.orange,
+        fontSize: deviceHeight > 700 ? 14 : 12,
+        zIndex: 900,
+    },
+    showMoreBtn: {
+        width: 80,
+        zIndex: 300,
+    },
+    label: {
+        flex: 1,
+        width: '100%',
+        color: COLORS.light.textGray,
+        height: 30,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        textAlign: 'left',
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: deviceHeight > 700 ? 18 : 16,
+        fontWeight: '800',
+        fontFamily: FONTS.regular
+    }
 });
 
 export default Home;

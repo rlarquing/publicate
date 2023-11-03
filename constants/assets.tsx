@@ -43,6 +43,7 @@ import account_icon from '../assets/icons/account-icon.png';
 import cash_icon from '../assets/icons/cash-icon.png';
 import money_icon from '../assets/icons/money-icon.png';
 import arrow_up_icon from '../assets/icons/arrow-up-icon.png';
+import arrow_right_icon from '../assets/icons/arrow-right-icon.png';
 import arrow_down_icon from '../assets/icons/arrow-down-icon.png';
 import hide_password_icon from '../assets/icons/hide-password-icon.png';
 import show_password_icon from '../assets/icons/show-password-icon.png';
@@ -143,6 +144,7 @@ export default {
     man_attention,
     arrow_down_icon,
     arrow_up_icon,
+    arrow_right_icon,
     show_password_icon,
     hide_password_icon,
     business1,

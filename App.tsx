@@ -12,8 +12,8 @@ import Register from "./screens/Register";
 import Home from "./screens/Home";
 import Search from "./screens/Search";
 import Favorites from "./screens/Favorites";
-// import Profile from "./screens/Profile";
-// import Settings from "./screens/Settings";
+import Profile from "./screens/Profile";
+import Settings from "./screens/Settings";
 // import AddCard from "./screens/AddCard";
 // import AddCardOld from "./screens/AddCardOld";
 // import { registerRootComponent } from 'expo';
@@ -74,9 +74,9 @@ const App = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Favorites" component={Favorites} />
-        {/* <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="AddCard" component={AddCard} />
+        {/* <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="AddCardOld" component={AddCardOld} /> */}
       </Stack.Navigator>
     </NavigationContainer>

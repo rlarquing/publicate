@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const deviceHeight = Dimensions.get('window').height;
 
-const PlanDetails = ({ route }: any) => {
+const Register = ({ route }: any) => {
     const navigation = useNavigation();
     const { accountType, planType } = route.params;
 
@@ -506,4 +506,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanDetails;
+export default Register;

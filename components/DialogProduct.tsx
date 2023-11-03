@@ -7,7 +7,7 @@ import { DefaultBadge, RatingBadge } from "./RatingBadge";
 
 let { height, width } = Dimensions.get("window");
 
-export const DialogProduct = ({ open, setOpen, avatar, image, rate, title, available, homeService, name, address, description, time, backColor }: any) => {
+export const DialogProduct = ({ open, setOpen, avatar, image, rate, title, available, homeService, name, address, description, time, price, backColor }: any) => {
   const navigation = useNavigation();
 
   const bottom = useRef(new Animated.Value((height - 80))).current;
@@ -67,7 +67,7 @@ export const DialogProduct = ({ open, setOpen, avatar, image, rate, title, avail
             <Text style={styles.title}>{title}</Text>
             <View style={{ width: "100%" }}>
               <Line size={"100%"} weight={1} marginLeft={"auto"} marginRight={"auto"} color={COLORS.primary} top={8} marginBottom={25} />
-              <DefaultBadge size={90} weight={25} color={COLORS.primary} value={"$600.00"} marginLeft={"auto"} textSize={10} right={0} top={0} />
+              <DefaultBadge size={90} weight={25} color={COLORS.primary} value={price} marginLeft={"auto"} textSize={10} right={0} top={0} />
             </View>
             <View style={styles.description}>
               <Text style={[styles.text, { marginBottom: 10, minHeight: 80 }]}>{description}</Text>
@@ -81,8 +81,10 @@ export const DialogProduct = ({ open, setOpen, avatar, image, rate, title, avail
               <View style={styles.scrollArea}>
                 <View style={styles.cardContent}>
                   <View style={styles.leftSide}>
-                    <Image style={styles.miniCardAvatar} source={avatar} />
-                    <RatingBadge size={50} weight={25} color={COLORS.primary} value={rate} top={60} iconSize={12} textSize={10} />
+                    <View style={styles.miniCardAvatar}>
+                      <Image style={styles.avatar} source={avatar} />
+                    </View>
+                    <RatingBadge size={50} weight={25} color={COLORS.primary} value={rate} top={65} iconSize={12} textSize={10} />
                   </View>
                   <View style={styles.middleSide}>
                     <Text style={styles.cardTitle}>{name}</Text>
@@ -97,7 +99,7 @@ export const DialogProduct = ({ open, setOpen, avatar, image, rate, title, avail
           </View>
         </View>
       </View>
-    </Animated.View>
+    </Animated.View >
   );
 };
 
@@ -312,26 +314,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   avatar: {
-    width: 148,
-    height: 148,
-    flex: 1,
+    width: 78,
+    height: 78,
     alignItems: "center",
     justifyContent: "center",
     position: 'absolute',
-    top: -30,
     marginLeft: "auto",
     marginRight: "auto",
-    borderWidth: 8,
-    borderColor: COLORS.white,
-    borderRadius: 150,
-    zIndex: 300,
-    shadowColor: COLORS.shadow,
-    shadowOffset: {
-      width: 5,
-      height: 3,
-    },
-    shadowOpacity: 0.42,
-    shadowRadius: 2.22
+    borderRadius: 50
   },
   description: {
     position: "relative",
@@ -480,7 +470,8 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: COLORS.white,
     borderRadius: 50,
-    zIndex: 300
+    zIndex: 200,
+    ...SHADOWS.dark
   },
   circle: {
     width: 12,

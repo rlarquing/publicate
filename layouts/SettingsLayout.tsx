@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
@@ -11,28 +12,18 @@ import {
 } from "react-native";
 import { assets, COLORS, SHADOWS, SIZES } from "../constants";
 import { useNavigation } from "@react-navigation/native";
-import FocusedStatusBar from '../components/FocusedStatusBar';
-import NavigationBar from '../components/NavigationBar';
-import { CustomAlert, ALERT_TYPE, ICON_COLOR } from "../components/CustomAlert";
+import { ReturnAction, NavigationBar, FocusedStatusBar, CustomAlert, ALERT_TYPE, ICON_COLOR } from "../components";
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-const Layout = ({ children, title, headerBackground, blackColor }: any) => {
+const SettingsLayout = ({ children, title, backRoute }: any) => {
     const navigation = useNavigation();
     const [showExitAlert, setShowExitAlert] = useState(false);
 
     const showAlertSalir = () => {
         setShowExitAlert(true);
     };
-
-    const profileEvent = async () => {
-        navigation.navigate("Profile");
-    }
-
-    const settingsEvent = async () => {
-        navigation.navigate("Settings");
-    }
 
     useEffect(function didMount() {
         const backAction = () => {
@@ -47,7 +38,7 @@ const Layout = ({ children, title, headerBackground, blackColor }: any) => {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: headerBackground ? headerBackground : COLORS.light.orange }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.accent }}>
             <FocusedStatusBar background={COLORS.black} />
 
             <CustomAlert
@@ -93,13 +84,8 @@ const Layout = ({ children, title, headerBackground, blackColor }: any) => {
             />
 
             <View style={styles.header}>
-                <TouchableOpacity style={styles.avatarBtn} onPress={profileEvent} activeOpacity={0.5}>
-                    <Image style={styles.avatar} source={assets.logo} />
-                </TouchableOpacity>
-                <Text style={[styles.title, blackColor ? { color: COLORS.black } : { color: COLORS.white }]}>{title}</Text>
-                <TouchableOpacity style={styles.menuBtn} onPress={settingsEvent} activeOpacity={0.5}>
-                    <Image style={[styles.menuIcon, blackColor ? { tintColor: COLORS.black } : { tintColor: COLORS.white }]} source={assets.menu} />
-                </TouchableOpacity>
+                <ReturnAction route={backRoute} marginTop={15} marginLeft={15} />
+                <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.container}>
                 <View style={styles.pageContainer}>
@@ -123,11 +109,8 @@ const styles = StyleSheet.create({
         margin: 0,
         paddingBottom: 0,
         paddingTop: 0,
-        borderTopLeftRadius: SIZES.extraLarge,
-        borderTopRightRadius: SIZES.extraLarge,
         top: 0,
         bottom: 0,
-        backgroundColor: COLORS.light.primary,
         ...SHADOWS.card
     },
     pageContainer: {
@@ -229,4 +212,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Layout;
+export default SettingsLayout;

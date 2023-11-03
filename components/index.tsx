@@ -12,7 +12,7 @@ import NavigationBar from "./NavigationBar";
 import DropGradient from "./DropGradient";
 import { CustomAlert, ICON_COLOR, ALERT_TYPE } from './CustomAlert';
 import Loading from "./Loading";
-import { DefaultInput } from "./Input";
+import { DefaultInput, SearchInput } from "./Input";
 import { Line } from "./Line";
 import { DobleButton } from "./DobleButton";
 import { PlanCard } from "./PlanCard";
@@ -46,6 +46,7 @@ export {
     ALERT_TYPE,
     Loading,
     DefaultInput,
+    SearchInput,
     Line,
     DobleButton,
     PlanCard,

@@ -5,12 +5,14 @@ import {
     ScrollView,
     Dimensions,
     TouchableOpacity,
-    Text
+    Text,
+    Keyboard
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, MiniCard, DialogBusiness, DefaultInput } from "../components";
+import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, MiniCard, DialogBusiness, SearchInput } from "../components";
 import { Layout } from "../layouts";
 import ProductCard from "../components/ProductCard";
+import { DialogProduct } from "../components/DialogProduct";
 // import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
 
@@ -19,15 +21,23 @@ const deviceHeight = Dimensions.get('window').height;
 const Search = () => {
     const [avatarCard, setAvatarCard] = useState('');
     const [nameCard, setNameCard] = useState('');
+    const [titleCard, setTitleCard] = useState('');
     const [imageCard, setImageCard] = useState('');
     const [addressCard, setAddressCard] = useState('');
     const [timeCard, setTimeCard] = useState('');
     const [productsCard, setProductsCard] = useState('');
+    const [descriptionCard, setDescriptionCard] = useState('');
+    const [rateCard, setRateCard] = useState('');
+    const [priceCard, setPriceCard] = useState('');
+    const [availableCard, setAvailableCard] = useState('');
+    const [homeServiceCard, setHomeServiceCard] = useState('');
+
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
     const [showDialogBusiness, setShowDialogBusiness] = useState(false);
+    const [showDialogProduct, setShowDialogProduct] = useState(false);
     const [filter, setFilter] = useState('');
     const [optionsFilter, setOptionsFilter] = useState([]);
 
@@ -35,13 +45,15 @@ const Search = () => {
         navigation.navigate("Home");
     }
 
-    const optionsList = optionsFilter.map((itemObj: any, index: number) =>
-        <View style={styles.section} key={index}>
-        </View >
-    );
-
     const filterSelect = (newValue: string) => {
         setFilter(newValue);
+    }
+
+    const searchEvent = (evt: any) => {
+        if (evt.nativeEvent.key == "Enter") {
+            console.log("key: ", evt);
+            Keyboard.dismiss();
+        }
     }
 
     // useEffect(() => {
@@ -57,18 +69,24 @@ const Search = () => {
             name: "Nestor Pizzas",
             image: assets.business1,
             address: "Calle M #83 e Simon Reyes",
-            time: "Horario: \n 7:30 AM \n a \n 5:30 PM",
+            time: "Horario: 7:30 AM - 05:30 PM",
             rate: 4.6,
             products: [
                 {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
                     image: assets.business1,
                     price: "$150",
                     description: "Pizza napolitana de queso campesino."
                 },
                 {
+                    name: "Paquete de fresas",
                     image: assets.business4,
                     price: "$600",
-                    description: "Paquete de fresas importadas de excelente calidad."
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
                 }]
         }
         , {
@@ -76,18 +94,24 @@ const Search = () => {
             name: "La Panameña",
             image: assets.business4,
             address: "Calle Libertad #62",
-            time: "Horario: \n 7:30 AM \n a \n 5:30 PM",
+            time: "Horario: 7:30 AM - 05:30 PM",
             rate: 4.3,
             products: [
                 {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
                     image: assets.business1,
                     price: "$150",
                     description: "Pizza napolitana de queso campesino."
                 },
                 {
-                    image: assets.business4,
-                    price: "$600",
-                    description: "Paquete de fresas importadas de excelente calidad."
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
                 }]
         },
         {
@@ -95,18 +119,24 @@ const Search = () => {
             name: "Dulcería Dolores",
             image: assets.business2,
             address: "Calle Maceo #72 e A y B",
-            time: "Horario: \n 7:30 AM \n a \n 5:30 PM",
+            time: "Horario: 7:30 AM - 05:30 PM",
             rate: 3.2,
             products: [
                 {
-                    image: assets.business1,
-                    price: "$150",
-                    description: "Pizza napolitana de queso campesino."
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
                 },
                 {
+                    name: "Paquete de fresas",
                     image: assets.business4,
                     price: "$600",
-                    description: "Paquete de fresas importadas de excelente calidad."
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
                 }]
         },
         {
@@ -114,42 +144,103 @@ const Search = () => {
             name: "Panaderia Express",
             image: assets.business6,
             address: "Celle D #24 e Simon Reyes y Maceo",
-            time: "Horario: \n 7:30 AM \n a \n 5:30 PM",
+            time: "Horario: 7:30 AM - 05:30 PM",
             rate: 2.8,
             products: [
                 {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
                     image: assets.business1,
                     price: "$150",
                     description: "Pizza napolitana de queso campesino."
                 },
                 {
+                    name: "Paquete de fresas",
                     image: assets.business4,
                     price: "$600",
-                    description: "Paquete de fresas importadas de excelente calidad."
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
                 }]
         }
     ];
 
     const productsData = [
         {
+            name: "Pizza napolitana",
             image: assets.business1,
             price: "$150",
-            description: "Pizza napolitana de queso campesino."
+            available: 4,
+            homeService: true,
+            description: "Pizza napolitana de queso campesino.",
+            business: {
+                avatar: assets.avatar,
+                name: "Nestor Pizzas",
+                image: assets.business1,
+                address: "Calle M #83 e Simon Reyes",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 4.6
+            }
         },
         {
+            name: "Paquete de croquetas",
             image: assets.business2,
             price: "$300",
-            description: "Paquete de croquetas de pescados."
+            available: 4000,
+            homeService: false,
+            description: "Paquete de croquetas de pescados de mar.",
+            business: {
+                avatar: assets.people_table,
+                name: "Dulcería Dolores",
+                image: assets.business2,
+                address: "Calle Maceo #72 e A y B",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 3.2
+            }
         },
         {
+            name: "Paquete de fresas",
             image: assets.business4,
             price: "$600",
-            description: "Paquete de fresas importadas de excelente calidad."
+            available: 100,
+            homeService: true,
+            description: "Paquete de fresas importadas de excelente calidad.",
+            business: {
+                avatar: assets.logo,
+                name: "Panaderia Express",
+                image: assets.business6,
+                address: "Celle D #24 e Simon Reyes y Maceo",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 2.8
+            }
         }
     ];
 
+
     const productsList = productsData.map((item: any, index: number) =>
-        <ProductCard style={styles.section} key={index} image={item.image} title={item.price} description={item.description} />
+        <ProductCard
+            style={styles.section}
+            key={index}
+            image={item.image}
+            title={item.price}
+            description={item.description}
+            handlePress={() => {
+                setTitleCard(item.name);
+                setImageCard(item.image);
+                setPriceCard(item.price);
+                setAvailableCard(item.available);
+                setHomeServiceCard(item.homeService);
+                setDescriptionCard(item.description);
+
+                setNameCard(item.business.name);
+                setAvatarCard(item.business.avatar);
+                setAddressCard(item.business.address);
+                setTimeCard(item.business.time);
+                setRateCard(item.business.rate);
+                setShowDialogProduct(true);
+            }}
+        />
     );
 
     const businessList = data.map((item: any, index: number) =>
@@ -166,9 +257,10 @@ const Search = () => {
                 setAvatarCard(item.avatar);
                 setImageCard(item.image);
                 setAddressCard(item.address);
-                setTimeCard(item.time);
+                setTimeCard(item.time.replace("\n", ""));
+                setProductsCard(item.products);
+                setRateCard(item.rate);
                 setShowDialogBusiness(true);
-                setProductsCard(item.products)
             }}
         />
     );
@@ -183,10 +275,27 @@ const Search = () => {
                     image={imageCard}
                     address={addressCard}
                     time={timeCard}
+                    rate={rateCard}
                     products={productsCard}
                     backColor={COLORS.dark.gray}
                     open={showDialogBusiness}
                     setOpen={setShowDialogBusiness}
+                />}
+                {showDialogProduct && <DialogProduct
+                    title={titleCard}
+                    name={nameCard}
+                    avatar={avatarCard}
+                    image={imageCard}
+                    address={addressCard}
+                    description={descriptionCard}
+                    rate={rateCard}
+                    time={timeCard}
+                    available={availableCard}
+                    homeService={homeServiceCard}
+                    price={priceCard}
+                    backColor={COLORS.dark.gray}
+                    open={showDialogProduct}
+                    setOpen={setShowDialogProduct}
                 />}
 
                 <CustomAlert
@@ -218,7 +327,7 @@ const Search = () => {
                 />
                 <View style={styles.page}>
                     <View style={styles.header}>
-                        <DefaultInput
+                        <SearchInput
                             icon={assets.search}
                             iconColor={COLORS.gray}
                             size={"95%"}
@@ -226,12 +335,13 @@ const Search = () => {
                             text={filter}
                             placeholder={"Buscar..."}
                             handleTyping={filterSelect}
+                            handleKeyPress={searchEvent}
                         />
                     </View>
                     <ScrollView>
                         <View style={styles.content}>
                             <View style={styles.sectionHeader}>
-                                <Text style={styles.label}>Productos:</Text>
+                                <Text style={styles.label}>Nuevos productos:</Text>
                                 <TouchableOpacity style={styles.showMoreBtn} onPress={() => { }}>
                                     <Text style={styles.showMoreText}>Mostrar más</Text>
                                 </TouchableOpacity>
@@ -244,7 +354,7 @@ const Search = () => {
                                 </ScrollView>
                             </View>
                             <View style={[styles.sectionHeader, { marginBottom: 5 }]}>
-                                <Text style={styles.label}>Negocios:</Text>
+                                <Text style={styles.label}>Nuevos negocios:</Text>
                             </View>
                             {businessList}
 

@@ -1,31 +1,61 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    Text,
     View,
-    Image,
-    TextInput,
+    ScrollView,
+    Dimensions,
     TouchableOpacity,
-    Dimensions
+    Text,
+    Keyboard
 } from "react-native";
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from "../constants";
-import { DefaultButton, CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, SmallButton, Line } from "../components";
+import { CustomAlert, ICON_COLOR, ALERT_TYPE, Loading, MiniCard, DialogBusiness, SearchInput, Line } from "../components";
 import { Layout } from "../layouts";
+import ProductCard from "../components/ProductCard";
+import { DialogProduct } from "../components/DialogProduct";
 // import { useNavigation } from "@react-navigation/native";
 // import jwtDecode from 'jwt-decode';
 
 const deviceHeight = Dimensions.get('window').height;
 
 const Favorites = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [avatarCard, setAvatarCard] = useState('');
+    const [nameCard, setNameCard] = useState('');
+    const [titleCard, setTitleCard] = useState('');
+    const [imageCard, setImageCard] = useState('');
+    const [addressCard, setAddressCard] = useState('');
+    const [timeCard, setTimeCard] = useState('');
+    const [productsCard, setProductsCard] = useState('');
+    const [descriptionCard, setDescriptionCard] = useState('');
+    const [rateCard, setRateCard] = useState('');
+    const [priceCard, setPriceCard] = useState('');
+    const [availableCard, setAvailableCard] = useState('');
+    const [homeServiceCard, setHomeServiceCard] = useState('');
+
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [titleMessage, setTitleMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showLoading, setShowLoading] = useState(false);
+    const [showDialogBusiness, setShowDialogBusiness] = useState(false);
+    const [showDialogProduct, setShowDialogProduct] = useState(false);
+    const [filter, setFilter] = useState('');
+    const [optionsFilter, setOptionsFilter] = useState([]);
+    const [showLess, setShowLess] = useState(true);
+    const [showLessProducts, setShowLessProducts] = useState(true);
 
     const loginEvent = async () => {
         navigation.navigate("Home");
+    }
+
+    const filterSelect = (newValue: string) => {
+        setFilter(newValue);
+    }
+
+    const searchEvent = (evt: any) => {
+        if (evt.nativeEvent.key == "Enter") {
+            console.log("key: ", evt);
+            Keyboard.dismiss();
+        }
     }
 
     // useEffect(() => {
@@ -35,10 +65,290 @@ const Favorites = () => {
     // }
     // });
 
+    const data: any = [
+        {
+            avatar: assets.avatar,
+            name: "Nestor Pizzas",
+            image: assets.business1,
+            address: "Calle M #83 e Simon Reyes",
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 4.6,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
+        }
+        , {
+            avatar: assets.welcome_image,
+            name: "La Panameña",
+            image: assets.business4,
+            address: "Calle Libertad #62",
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 4.3,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
+                }]
+        },
+        {
+            avatar: assets.people_table,
+            name: "Dulcería Dolores",
+            image: assets.business2,
+            address: "Calle Maceo #72 e A y B",
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 3.2,
+            products: [
+                {
+                    name: "Paquete de croquetas",
+                    image: assets.business2,
+                    price: "$300",
+                    available: 4000,
+                    homeService: false,
+                    description: "Paquete de croquetas de pescados de mar.",
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
+        },
+        {
+            avatar: assets.logo,
+            name: "Panaderia Express",
+            image: assets.business6,
+            address: "Celle D #24 e Simon Reyes y Maceo",
+            time: "Horario: 7:30 AM - 05:30 PM",
+            rate: 2.8,
+            products: [
+                {
+                    name: "Pizza napolitana",
+                    available: 4,
+                    homeService: true,
+                    image: assets.business1,
+                    price: "$150",
+                    description: "Pizza napolitana de queso campesino."
+                },
+                {
+                    name: "Paquete de fresas",
+                    image: assets.business4,
+                    price: "$600",
+                    available: 100,
+                    homeService: true,
+                    description: "Paquete de fresas importadas de excelente calidad.",
+                }]
+        }
+    ];
+
+    const productsData = [
+        {
+            name: "Pizza napolitana",
+            image: assets.business1,
+            price: "$150",
+            available: 4,
+            homeService: true,
+            description: "Pizza napolitana de queso campesino.",
+            business: {
+                avatar: assets.avatar,
+                name: "Nestor Pizzas",
+                image: assets.business1,
+                address: "Calle M #83 e Simon Reyes",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 4.6
+            }
+        },
+        {
+            name: "Paquete de croquetas",
+            image: assets.business2,
+            price: "$300",
+            available: 4000,
+            homeService: false,
+            description: "Paquete de croquetas de pescados de mar.",
+            business: {
+                avatar: assets.people_table,
+                name: "Dulcería Dolores",
+                image: assets.business2,
+                address: "Calle Maceo #72 e A y B",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 3.2
+            }
+        },
+        {
+            name: "Paquete de fresas",
+            image: assets.business4,
+            price: "$600",
+            available: 100,
+            homeService: true,
+            description: "Paquete de fresas importadas de excelente calidad.",
+            business: {
+                avatar: assets.logo,
+                name: "Panaderia Express",
+                image: assets.business6,
+                address: "Celle D #24 e Simon Reyes y Maceo",
+                time: "Horario: 7:30 AM - 05:30 PM",
+                rate: 2.8
+            }
+        }
+    ];
+
+
+    const productsList = showLessProducts ?
+        productsData.slice(0, 3).map((item: any, index: number) =>
+            <ProductCard
+                style={styles.section}
+                key={index}
+                image={item.image}
+                title={item.price}
+                description={item.description}
+                handlePress={() => {
+                    setTitleCard(item.name);
+                    setImageCard(item.image);
+                    setPriceCard(item.price);
+                    setAvailableCard(item.available);
+                    setHomeServiceCard(item.homeService);
+                    setDescriptionCard(item.description);
+
+                    setNameCard(item.business.name);
+                    setAvatarCard(item.business.avatar);
+                    setAddressCard(item.business.address);
+                    setTimeCard(item.business.time);
+                    setRateCard(item.business.rate);
+                    setShowDialogProduct(true);
+                }}
+            />
+        )
+        :
+        productsData.map((item: any, index: number) =>
+            <ProductCard
+                style={styles.section}
+                key={index}
+                image={item.image}
+                title={item.price}
+                description={item.description}
+                handlePress={() => {
+                    setTitleCard(item.name);
+                    setImageCard(item.image);
+                    setPriceCard(item.price);
+                    setAvailableCard(item.available);
+                    setHomeServiceCard(item.homeService);
+                    setDescriptionCard(item.description);
+
+                    setNameCard(item.business.name);
+                    setAvatarCard(item.business.avatar);
+                    setAddressCard(item.business.address);
+                    setTimeCard(item.business.time);
+                    setRateCard(item.business.rate);
+                    setShowDialogProduct(true);
+                }}
+            />
+        )
+        ;
+
+    const businessList = showLess ?
+        data.slice(0, 2).map((item: any, index: number) =>
+            <MiniCard
+                key={index}
+                avatar={item.avatar}
+                title={item.name}
+                image={item.image}
+                address={item.address}
+                time={item.time}
+                rate={item.rate}
+                handlePress={() => {
+                    setNameCard(item.name);
+                    setAvatarCard(item.avatar);
+                    setImageCard(item.image);
+                    setAddressCard(item.address);
+                    setTimeCard(item.time.replace("\n", ""));
+                    setProductsCard(item.products);
+                    setRateCard(item.rate);
+                    setShowDialogBusiness(true);
+                }}
+            />
+        )
+        :
+        data.map((item: any, index: number) =>
+            <MiniCard
+                key={index}
+                avatar={item.avatar}
+                title={item.name}
+                image={item.image}
+                address={item.address}
+                time={item.time}
+                rate={item.rate}
+                handlePress={() => {
+                    setNameCard(item.name);
+                    setAvatarCard(item.avatar);
+                    setImageCard(item.image);
+                    setAddressCard(item.address);
+                    setTimeCard(item.time.replace("\n", ""));
+                    setProductsCard(item.products);
+                    setRateCard(item.rate);
+                    setShowDialogBusiness(true);
+                }}
+            />
+        );
+
     return (
         <Layout title={"Favoritos"} headerBackground={COLORS.dark.red} blackColor={false} children={
             <View style={styles.container}>
                 {showLoading && <Loading />}
+                {showDialogBusiness && <DialogBusiness
+                    title={nameCard}
+                    avatar={avatarCard}
+                    image={imageCard}
+                    address={addressCard}
+                    time={timeCard}
+                    rate={rateCard}
+                    products={productsCard}
+                    backColor={COLORS.dark.red}
+                    open={showDialogBusiness}
+                    setOpen={setShowDialogBusiness}
+                />}
+                {showDialogProduct && <DialogProduct
+                    title={titleCard}
+                    name={nameCard}
+                    avatar={avatarCard}
+                    image={imageCard}
+                    address={addressCard}
+                    description={descriptionCard}
+                    rate={rateCard}
+                    time={timeCard}
+                    available={availableCard}
+                    homeService={homeServiceCard}
+                    price={priceCard}
+                    backColor={COLORS.dark.red}
+                    open={showDialogProduct}
+                    setOpen={setShowDialogProduct}
+                />}
 
                 <CustomAlert
                     type={ALERT_TYPE.OK_ALERT}
@@ -67,77 +377,49 @@ const Favorites = () => {
                         }
                     ]}
                 />
+                <View style={styles.page}>
+                    <View style={styles.header}>
+                        <SearchInput
+                            icon={assets.search}
+                            iconColor={COLORS.gray}
+                            size={"95%"}
+                            type={"name"}
+                            text={filter}
+                            placeholder={"Buscar..."}
+                            handleTyping={filterSelect}
+                            handleKeyPress={searchEvent}
+                        />
+                    </View>
+                    <ScrollView>
+                        <View style={styles.content}>
+                            <View style={[styles.sectionHeader, { marginBottom: 5 }]}>
+                                <Text style={styles.label}>Negocios:</Text>
+                            </View>
+                            {businessList}
 
-                <View style={styles.question}>
-                    <Text style={{ fontSize: deviceHeight > 700 ? 18 : 14 }}>¿Que tipo de Cuenta vas a crear?</Text>
-                </View>
-                <View style={styles.card}>
-                    <View style={styles.leftSide}>
-                        <View style={styles.cardContent}>
-                            <Text style={styles.cardTitle}>Cliente</Text>
-                            <Text style={styles.description}>Cree una cuenta para acceder a todos los negocios registrados en Publicate, usted podrá encontrar los productos y servicios que desee.</Text>
-                            <Line size={"100%"} weight={1} />
-                            {deviceHeight > 700 && <DefaultButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={20}
-                                size={"100%"}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                marginTop={5}
-                                activeOpacity={0.5}
-                            />}
-                            {deviceHeight <= 700 && <SmallButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={14}
-                                size={"100%"}
-                                marginTop={5}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                activeOpacity={0.5}
-                            />}
+                            <TouchableOpacity style={showLess ? [styles.showMoreBtn, { marginLeft: "auto", marginRight: "auto" }] : [styles.showMoreBtn, { width: 120, marginLeft: "auto", marginRight: "auto" }]} onPress={() => setShowLess(!showLess)}>
+                                <Text style={styles.showMoreText}>{showLess ? "Mostrar más" : "Mostrar menos"}</Text>
+                            </TouchableOpacity>
+
+                            <View style={{ marginVertical: 10 }}>
+                                <Line size={"80%"} weight={1} marginLeft={"auto"} marginRight={"auto"} />
+                            </View>
+
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.label}>Productos:</Text>
+                                <TouchableOpacity style={showLessProducts ? styles.showMoreBtn : [styles.showMoreBtn, { width: 120 }]} onPress={() => setShowLessProducts(!showLessProducts)}>
+                                    <Text style={styles.showMoreText}>{showLessProducts ? "Mostrar más" : "Mostrar menos"}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.scrollArea}>
+                                <ScrollView horizontal={true}>
+                                    <View style={styles.scrollItems}>
+                                        {productsList}
+                                    </View>
+                                </ScrollView>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.rightSide}>
-                        <Image style={styles.image} source={assets.standing_people} />
-                    </View>
-                </View>
-                <View style={styles.card}>
-                    <View style={styles.leftSide}>
-                        <View style={styles.cardContent}>
-                            <Text style={styles.cardTitle}>Negocio</Text>
-                            <Text style={styles.description}>Cree una cuenta para promocionar todos sus porductos y servicios a todos los clientes de Publicate. Vea crecer su negocio y sus ingresos con nuestra platafaroma.</Text>
-                            <Line size={"100%"} weight={1} />
-                            {deviceHeight > 700 && <DefaultButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={20}
-                                size={"100%"}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                marginTop={5}
-                                activeOpacity={0.5}
-                            />}
-                            {deviceHeight <= 700 && <SmallButton
-                                text={'Continuar'}
-                                handlePress={loginEvent}
-                                textSize={14}
-                                size={"100%"}
-                                marginTop={5}
-                                btnBorderColor={COLORS.white}
-                                backgroundColor={COLORS.primary}
-                                textColor={COLORS.white}
-                                activeOpacity={0.5}
-                            />}
-                        </View>
-                    </View>
-                    <View style={styles.rightSide}>
-                        <Image style={styles.image} source={assets.business_man} />
-                    </View>
+                    </ScrollView>
                 </View>
             </View>
         } />
@@ -150,91 +432,87 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: "Helvetica"
     },
-    card: {
-        display: "flex",
-        flexDirection: "row",
-        width: "90%",
-        backgroundColor: COLORS.white,
-        alignItems: "flex-start",
-        justifyContent: "center",
-        alignContent: "flex-start",
-        top: 120,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: SIZES.extraLarge,
-        padding: SIZES.large,
-        borderRadius: 20,
-        shadowColor: COLORS.black,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        zIndex: 300
+    page: {
+        position: "relative",
+        height: "auto",
+        bottom: 0
     },
-    logo: {
-        top: -60,
-        width: deviceHeight > 700 ? 128 : 96,
-        height: deviceHeight > 700 ? 128 : 96,
+    content: {
+        position: "relative",
+        minHeight: deviceHeight,
+        bottom: 0,
+        padding: 0,
+        paddingBottom: 180,
+    },
+    section: {
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: "100%",
+        position: "relative"
+    },
+    sectionHeader: {
+        display: "flex",
+        flexDirection: 'row',
         marginLeft: "auto",
         marginRight: "auto",
-        zIndex: 300
+        alignItems: "center",
+        justifyContent: "center",
+        alignContent: "center",
+        width: "90%",
+        position: "relative"
     },
-    imageBox: {
-        width: "100%",
-        height: 150,
+    scrollArea: {
         top: 0,
-        position: "absolute",
-        zIndex: 500
-    },
-    image: {
-        width: "85%",
-        height: deviceHeight > 700 ? 140 : 96,
-        top: 10,
-        marginLeft: "auto",
-        marginRight: 0,
-        zIndex: 200
-    },
-    question: {
-        top: 90,
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
-        alignContent: "center",
-        verticalAlign: "middle",
-        fontFamily: FONTS.regular,
-        fontWeight: "300",
+        width: "100%",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        borderBottomColor: COLORS.light.borderColor,
+        borderBottomWidth: 1,
+        marginBottom: 20
     },
-    leftSide: {
-        width: "70%"
+    scrollItems: {
+        top: 0,
+        display: "flex",
+        flexDirection: "row",
+        width: "auto",
+        padding: SIZES.large
     },
-    rightSide: {
-        width: "30%"
-    },
-    cardContent: {
+    header: {
+        padding: SIZES.extraLarge,
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
-        verticalAlign: "top",
-        alignContent: "flex-start"
+        alignItems: "center",
+        justifyContent: "center",
+        alignContent: "center"
     },
-    cardTitle: {
-        fontFamily: FONTS.title,
-        fontSize: 24,
-        color: COLORS.primary
-    },
-    description: {
+    showMoreText: {
         fontFamily: FONTS.regular,
-        fontSize: 12,
         fontWeight: "400",
-        color: COLORS.black,
-        lineHeight: 18,
-        textAlign: "justify"
+        color: COLORS.dark.orange,
+        fontSize: deviceHeight > 700 ? 14 : 12,
+        textAlign: "right",
+        zIndex: 900,
+    },
+    showMoreBtn: {
+        width: 80,
+        zIndex: 300,
+    },
+    label: {
+        flex: 1,
+        width: '100%',
+        color: COLORS.light.textGray,
+        height: 30,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        textAlign: 'left',
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: deviceHeight > 700 ? 18 : 16,
+        fontWeight: '800',
+        fontFamily: FONTS.regular
     }
 });
 
